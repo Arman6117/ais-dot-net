@@ -1,6 +1,6 @@
 "use client";
 import gsap from "gsap";
-import React, { useEffect, useRef, useState } from "react";
+import  { useEffect, useRef, useState } from "react";
 
 const Loader = () => {
   const loaderRef = useRef(null);
