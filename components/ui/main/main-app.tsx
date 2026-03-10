@@ -8,7 +8,7 @@ interface MainAppProps {
 
 const MainApp = ({ children }: MainAppProps) => {
   return (
-    <main className="relative z-10">
+    <main className="relative mt-">
       {children}
     </main>
   );

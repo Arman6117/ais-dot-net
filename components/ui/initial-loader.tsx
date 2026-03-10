@@ -1,6 +1,7 @@
 "use client";
+import { useLoader } from "@/context/loader-context";
 import gsap from "gsap";
-import  { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
 const Loader = () => {
   const loaderRef = useRef(null);
@@ -10,39 +11,48 @@ const Loader = () => {
   const barRef = useRef(null);
 
   const [percent, setPercent] = useState(0);
-
+  const { setLoaderDone } = useLoader();
   useEffect(() => {
     const ctx = gsap.context(() => {
       gsap.set([line1Ref.current, line2Ref.current], { yPercent: 110 });
       gsap.set(barRef.current, { scaleX: 0, transformOrigin: "left" });
       gsap.set(counterRef.current, { opacity: 0 });
-      
+
       const tl = gsap.timeline();
       tl.to(line1Ref.current, { yPercent: 0, ease: "power4.out", duration: 1 })
-      .to(
-        line2Ref.current,
-        { yPercent: 0, ease: "power4.out", duration: 1 },
-        "-=0.8"
-      )
-      .to(counterRef.current, { opacity: 1, duration: 0.5 }, "-=0.5");
-      
-      const counterObject = {value:0};
-      tl.to(counterObject, {
-        value:100,
-        duration:2.5,
-        ease:"power2.inOut",
-        onUpdate:()=>setPercent(Math.floor(counterObject.value))
-      }, "-=0.2")
-      tl.to(barRef.current,{scaleX:1,duration:2.5,ease:"power2.inOut"},"<")
+        .to(
+          line2Ref.current,
+          { yPercent: 0, ease: "power4.out", duration: 1 },
+          "-=0.8"
+        )
+        .to(counterRef.current, { opacity: 1, duration: 0.5 }, "-=0.5");
+
+      const counterObject = { value: 0 };
+      tl.to(
+        counterObject,
+        {
+          value: 100,
+          duration: 2.5,
+          ease: "power2.inOut",
+          onUpdate: () => setPercent(Math.floor(counterObject.value)),
+        },
+        "-=0.2"
+      );
+      tl.to(
+        barRef.current,
+        { scaleX: 1, duration: 2.5, ease: "power2.inOut" },
+        "<"
+      );
       tl.to(loaderRef.current, {
         yPercent: -100,
         duration: 1.2,
         ease: "power4.inOut",
-        delay: 0.3
+        delay: 0.3,
+        onComplete: () => setLoaderDone(true)
       });
     });
-      return () => ctx.revert();
-    }, []);
+    return () => ctx.revert();
+  }, []);
   return (
     <div
       ref={loaderRef}
@@ -81,7 +91,10 @@ const Loader = () => {
           </span>
         </div>
         <div className="h-px w-full bg-gray-200 relative">
-          <div ref={barRef} className="absolute w-full inset-y-0 left-0 bg-blue-600" />
+          <div
+            ref={barRef}
+            className="absolute w-full inset-y-0 left-0 bg-blue-600"
+          />
         </div>
       </div>
     </div>

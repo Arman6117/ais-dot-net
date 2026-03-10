@@ -1,5 +1,5 @@
 "use client";
-import { useCursor } from "@/lib/cursor-context";
+import { useCursor } from "@/context/cursor-context";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useState } from "react";
