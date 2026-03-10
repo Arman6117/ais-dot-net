@@ -1,11 +1,12 @@
 "use client";
+import { useCursor } from "@/lib/cursor-context";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useState } from "react";
 
 const navLinks = [
-  { label: "Home",    href: "/" },
-  { label: "About",   href: "/about" },
+  { label: "Home", href: "/" },
+  { label: "About", href: "/about" },
   { label: "Contact", href: "/contact" },
   { label: "Careers", href: "/careers" },
 ];
@@ -13,11 +14,10 @@ const navLinks = [
 export default function Navbar() {
   const pathname = usePathname();
   const [menuOpen, setMenuOpen] = useState(false);
-
+  const { setHovered } = useCursor();
   return (
     <>
       <nav className="fixed top-0 left-0 right-0 z-50 flex items-center justify-between px-6 md:px-12 h-16 bg-[#FAF9F6]/90 backdrop-blur-md border-b border-black/5">
-
         <Link
           href="/"
           className="font-black text-[0.95rem] tracking-tight text-[#111] no-underline"
@@ -30,16 +30,21 @@ export default function Navbar() {
           {navLinks.map(({ label, href }) => {
             const isActive = pathname === href;
             return (
-              <li key={href}>
+              <li
+                key={href}
+                onMouseEnter={() => setHovered(true)}
+                onMouseLeave={() => setHovered(false)}
+              >
                 <Link
                   href={href}
                   className={`
                     inline-block px-4 py-1.5 rounded-md
                     text-[0.72rem] font-medium tracking-widest uppercase
                     transition-all duration-200 no-underline
-                    ${isActive
-                      ? "text-blue-600 font-bold bg-blue-600/10"
-                      : "text-black/40 hover:text-[#111] hover:bg-black/5"
+                    ${
+                      isActive
+                        ? "text-blue-600 font-bold bg-blue-600/10"
+                        : "text-black/40 hover:text-[#111] hover:bg-black/5"
                     }
                   `}
                 >
@@ -78,14 +83,17 @@ export default function Navbar() {
             }`}
           />
         </button>
-
       </nav>
 
       <div
         className={`
           fixed inset-0 z-40 bg-[#FAF9F6] flex flex-col
           transition-all duration-500
-          ${menuOpen ? "opacity-100 pointer-events-auto" : "opacity-0 pointer-events-none"}
+          ${
+            menuOpen
+              ? "opacity-100 pointer-events-auto"
+              : "opacity-0 pointer-events-none"
+          }
         `}
       >
         <div className="h-16 border-b border-black/5" />
@@ -97,7 +105,9 @@ export default function Navbar() {
               <li
                 key={href}
                 className={`transition-all duration-500 ${
-                  menuOpen ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"
+                  menuOpen
+                    ? "opacity-100 translate-y-0"
+                    : "opacity-0 translate-y-4"
                 }`}
                 style={{ transitionDelay: menuOpen ? `${i * 80}ms` : "0ms" }}
               >
@@ -109,7 +119,11 @@ export default function Navbar() {
                     py-5 border-b border-black/06
                     text-[2rem] font-black tracking-tight no-underline
                     transition-colors duration-200
-                    ${isActive ? "text-blue-600" : "text-[#111] hover:text-blue-600"}
+                    ${
+                      isActive
+                        ? "text-blue-600"
+                        : "text-[#111] hover:text-blue-600"
+                    }
                   `}
                 >
                   {label}

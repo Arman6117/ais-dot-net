@@ -4,15 +4,13 @@ import "./globals.css";
 import { cn } from "@/lib/utils";
 import Loader from "@/components/ui/initial-loader";
 import Navbar from "@/components/ui/navbar";
-
-
+import MainApp from "@/components/ui/main/main-app";
+import CursorProvider from "@/components/ui/cursor-provider";
 
 const dmSans = DM_Sans({
   variable: "--font-dm-sans",
   subsets: ["latin"],
 });
-
-
 
 export const metadata: Metadata = {
   title: "Create Next App",
@@ -27,9 +25,13 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={`p-6 ${dmSans.className} bg-[#FAF9F6]`}>
-        <Loader />
-        <Navbar/>
-        {children}
+       
+          <CursorProvider>
+            <Loader />
+            <Navbar />
+            {children}
+          </CursorProvider>
+        
       </body>
     </html>
   );
