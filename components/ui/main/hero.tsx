@@ -39,6 +39,7 @@ const Hero = () => {
   }, [loaderDone]);
   return (
     <section
+    id="hero"
       className={`${instrumentSerif.variable}  relative z-1 min-h-screen grid grid-cols-1 lg:grid-cols-[1fr_300px] items-end pt-15.5 px-5 sm:px-8 lg:px-13 gap-12`}
     >
       <div
@@ -125,7 +126,7 @@ const Hero = () => {
       </div>
       <div
         id="heroAnchor"
-        className="flex items-end justify-center pb-12 order-last lg:order-0 min-h-75 lg:min-h-0"
+        className="flex items-center justify-center min-h-75 lg:min-h-0 lg:h-full order-last lg:order-0"
       />
     </section>
   );
