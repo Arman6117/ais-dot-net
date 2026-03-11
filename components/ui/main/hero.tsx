@@ -6,6 +6,7 @@ import Link from "next/link";
 import React, { useEffect, useRef } from "react";
 import Magnetic from "../magnetic";
 import { ArrowRight } from "lucide-react";
+import { useCursor } from "@/context/cursor-context";
 
 const instrumentSerif = Instrument_Serif({
   weight: "400",
@@ -21,6 +22,7 @@ const Hero = () => {
   const hl3Ref = useRef(null);
   const stripRef = useRef(null);
   const { loaderDone } = useLoader();
+  const {setHovered} = useCursor()
   useEffect(() => {
     if (!loaderDone) return;
 
@@ -111,8 +113,10 @@ const Hero = () => {
                 </svg>
               </div>
             </div>
-            <Magnetic>
+            <Magnetic  >
               <Link
+              onMouseEnter={()=> setHovered(true)}
+              onMouseLeave={()=> setHovered(false)}
                 href="#services"
                 className="group relative inline-flex items-center gap-2.25 px-6.5 py-3 bg-[#111] text-[#FDFCF9] text-[0.72rem] font-bold tracking-[0.04em] no-underline overflow-hidden"
               >

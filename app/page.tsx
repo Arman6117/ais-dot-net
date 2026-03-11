@@ -1,5 +1,6 @@
 import { Button } from "@/components/ui/button";
 import Magnetic from "@/components/ui/magnetic";
+import AboutSection from "@/components/ui/main/about-section";
 import Hero from "@/components/ui/main/hero";
 import ServicesSection from "@/components/ui/main/service-section";
 import TheCard from "@/components/ui/the-card";
@@ -15,6 +16,7 @@ export default function Home() {
      <Hero/>
      {/* <section id="services" style={{ height: "100vh", paddingTop: "100px" }}> */}
      <ServicesSection/>
+     <AboutSection/>
       {/* </section> */}
     </main>
   );
