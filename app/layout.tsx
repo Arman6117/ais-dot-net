@@ -5,6 +5,7 @@ import Loader from "@/components/ui/initial-loader";
 import Navbar from "@/components/ui/navbar";
 import CursorProvider from "@/components/ui/cursor-provider";
 import { LoaderProvider } from "@/context/loader-context";
+import { TransitionProvider } from "@/context/transition-context";
 
 const dmSans = DM_Sans({
   variable: "--font-dm-sans",
@@ -24,13 +25,15 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={`p-6 ${dmSans.className} bg-[#FAF9F6]`}>
-        <LoaderProvider>
-          <CursorProvider>
-            <Loader />
-            <Navbar />
-            {children}
-          </CursorProvider>
-        </LoaderProvider>
+        <TransitionProvider>
+          <LoaderProvider>
+            <CursorProvider>
+              <Loader />
+              <Navbar />
+              {children}
+            </CursorProvider>
+          </LoaderProvider>
+        </TransitionProvider>
       </body>
     </html>
   );

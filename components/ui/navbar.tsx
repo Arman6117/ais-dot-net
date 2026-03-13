@@ -3,6 +3,7 @@ import { useCursor } from "@/context/cursor-context";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useState } from "react";
+import TransitionLink from "./transition-link";
 
 const navLinks = [
   { label: "Home", href: "/" },
@@ -35,7 +36,7 @@ export default function Navbar() {
                 onMouseEnter={() => setHovered(true)}
                 onMouseLeave={() => setHovered(false)}
               >
-                <Link
+                <TransitionLink
                   href={href}
                   className={`
                     inline-block px-4 py-1.5 rounded-md
@@ -49,7 +50,7 @@ export default function Navbar() {
                   `}
                 >
                   {label}
-                </Link>
+                </TransitionLink>
               </li>
             );
           })}
