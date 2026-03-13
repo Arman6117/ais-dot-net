@@ -8,20 +8,21 @@ import { useLoader } from "@/context/loader-context";
 const TheCard = () => {
   const { loaderDone } = useLoader();
 
-  const cardRef    = useRef<HTMLDivElement>(null);
+  const cardRef = useRef<HTMLDivElement>(null);
   const founderRef = useRef<HTMLDivElement>(null);
-  const lensRef    = useRef<HTMLDivElement>(null);
+  const lensRef = useRef<HTMLDivElement>(null);
 
-  const mouseX    = useRef(0);
-  const mouseY    = useRef(0);
-  const cardX     = useRef(0);
-  const cardY     = useRef(0);
-  const phase     = useRef(0);
-  const rafRef    = useRef<number>(0);
+  const mouseX = useRef(0);
+  const mouseY = useRef(0);
+  const cardX = useRef(0);
+  const cardY = useRef(0);
+  const phase = useRef(0);
+  const rafRef = useRef<number>(0);
   const anchorPos = useRef({ x: 0, y: 0 });
 
   // ── Effect 1: register + position at hero anchor ──
   useEffect(() => {
+    if (window.innerWidth < 1024) return;
     gsap.registerPlugin(ScrollTrigger);
 
     mouseX.current = window.innerWidth / 2;
@@ -30,9 +31,9 @@ const TheCard = () => {
     const anchor = document.getElementById("heroAnchor");
     if (!anchor || !cardRef.current) return;
 
-    const r  = anchor.getBoundingClientRect();
-    const cx = r.left + r.width  / 2;
-    const cy = r.top  + r.height / 2;
+    const r = anchor.getBoundingClientRect();
+    const cx = r.left + r.width / 2;
+    const cy = r.top + r.height / 2;
 
     anchorPos.current = { x: cx, y: cy };
     cardX.current = cx;
@@ -43,7 +44,7 @@ const TheCard = () => {
 
   // ── Effect 2: entrance animation after loader ──
   useEffect(() => {
-    if (!loaderDone || !cardRef.current) return;
+    if (!loaderDone || !cardRef.current || window.innerWidth < 1024) return;
     gsap.to(cardRef.current, {
       y: anchorPos.current.y,
       opacity: 1,
@@ -55,6 +56,8 @@ const TheCard = () => {
 
   // ── Effect 3: mouse + lerp + tilt + scroll triggers ──
   useEffect(() => {
+    if (window.innerWidth < 1024) return;
+
     const onMouseMove = (e: MouseEvent) => {
       mouseX.current = e.clientX;
       mouseY.current = e.clientY;
@@ -78,7 +81,8 @@ const TheCard = () => {
     const onMouseLeaveHero = () => {
       if (!founderRef.current) return;
       gsap.to(founderRef.current, {
-        rotateY: 0, rotateX: 0,
+        rotateY: 0,
+        rotateX: 0,
         duration: 0.9,
         ease: "elastic.out(1, 0.4)",
       });
@@ -108,13 +112,22 @@ const TheCard = () => {
         cardY.current = mouseY.current;
         phase.current = 2;
         gsap.to(founderRef.current, { rotateY: 0, rotateX: 0, duration: 0.3 });
-        gsap.to(founderRef.current, { opacity: 0, duration: 0.7, ease: "power2.inOut" });
-        gsap.to(lensRef.current,    { opacity: 1, duration: 0.7, ease: "power2.inOut", delay: 0.2 });
+        gsap.to(founderRef.current, {
+          opacity: 0,
+          duration: 0.7,
+          ease: "power2.inOut",
+        });
+        gsap.to(lensRef.current, {
+          opacity: 1,
+          duration: 0.7,
+          ease: "power2.inOut",
+          delay: 0.2,
+        });
       },
       onLeaveBack: () => {
         phase.current = 0;
         gsap.to(founderRef.current, { opacity: 1, duration: 0.5 });
-        gsap.to(lensRef.current,    { opacity: 0, duration: 0.5 });
+        gsap.to(lensRef.current, { opacity: 0, duration: 0.5 });
         gsap.to(cardRef.current, {
           x: anchorPos.current.x,
           y: anchorPos.current.y,
@@ -125,41 +138,63 @@ const TheCard = () => {
     });
 
     // ── Trigger 2: Services → About ──
+    // card snaps to about anchor and stays there — no t3, no fade out
     const t2 = ScrollTrigger.create({
       trigger: "#aboutAnchor",
-      start: "center 40%",
+      start: "center 60%",
       onEnter: () => {
         phase.current = 0;
-
-        // read position lazily — anchor is in viewport at this moment
         const aboutAnchor = document.getElementById("aboutAnchor");
         if (!aboutAnchor || !cardRef.current) return;
         const ar = aboutAnchor.getBoundingClientRect();
-        const x  = ar.left + ar.width  / 2;
-        const y  = ar.top  + ar.height / 2;
+        const x = ar.left + ar.width / 2;
+        const y = ar.top + ar.height / 2;
 
-        gsap.to(lensRef.current,    { opacity: 0, duration: 0.5, ease: "power2.inOut" });
-        gsap.to(founderRef.current, { opacity: 1, duration: 0.7, ease: "power2.inOut", delay: 0.2 });
-        gsap.to(cardRef.current,    { x, y, duration: 0.8, ease: "power3.out" });
+        gsap.to(lensRef.current, {
+          opacity: 0,
+          duration: 0.5,
+          ease: "power2.inOut",
+        });
+        gsap.to(founderRef.current, {
+          opacity: 1,
+          duration: 0.7,
+          ease: "power2.inOut",
+          delay: 0.2,
+        });
+
+        // animate to position then switch to absolute inside anchor
+        gsap.to(cardRef.current, {
+          x,
+          y,
+          duration: 0.8,
+          ease: "power3.out",
+          onComplete: () => {
+            if (!cardRef.current || !aboutAnchor) return;
+            aboutAnchor.style.position = "relative";
+            aboutAnchor.appendChild(cardRef.current);
+            cardRef.current.style.position = "absolute";
+            cardRef.current.style.top = "50%";
+            // cardRef.current.style.left = "50%";
+            cardRef.current.style.transform = "translate(-50%, -50%)";
+            gsap.set(cardRef.current, { x: 0, y: 0, clearProps: "transform" });
+          },
+        });
       },
       onLeaveBack: () => {
+        if (!cardRef.current) return;
+        // move card back to body, restore fixed positioning
+        document.body.appendChild(cardRef.current);
+        cardRef.current.style.position = "fixed";
+        cardRef.current.style.top = "0";
+        cardRef.current.style.left = "0";
+        cardRef.current.style.transform = "translate(-50%, -50%)";
+
         cardX.current = mouseX.current;
         cardY.current = mouseY.current;
         phase.current = 2;
+        gsap.set(cardRef.current, { x: mouseX.current, y: mouseY.current });
         gsap.to(founderRef.current, { opacity: 0, duration: 0.5 });
-        gsap.to(lensRef.current,    { opacity: 1, duration: 0.5, delay: 0.2 });
-      },
-    });
-
-    // ── Trigger 3: Leave About downward — card fades out ──
-    const t3 = ScrollTrigger.create({
-      trigger: "#about",
-      start: "bottom 40%",
-      onEnter: () => {
-        gsap.to(cardRef.current, { opacity: 0, duration: 0.5, ease: "power2.inOut" });
-      },
-      onLeaveBack: () => {
-        gsap.to(cardRef.current, { opacity: 1, duration: 0.5, ease: "power2.inOut" });
+        gsap.to(lensRef.current, { opacity: 1, duration: 0.5, delay: 0.2 });
       },
     });
 
@@ -170,7 +205,6 @@ const TheCard = () => {
       cancelAnimationFrame(rafRef.current);
       t1.kill();
       t2.kill();
-      t3.kill();
     };
   }, []);
 
@@ -178,13 +212,13 @@ const TheCard = () => {
     <div
       ref={cardRef}
       id="the-card"
-    className="fixed z-200 w-65 h-85 pointer-events-none hidden md:block"
+      className="fixed z-[200] w-[260px] h-[340px] pointer-events-none hidden lg:block"
       style={{ transform: "translate(-50%, -50%)" }}
     >
       {/* ── Founder skin ── */}
       <div
         ref={founderRef}
-        className="absolute inset-0 rounded-[14px] overflow-hidden bg-linear-to-br from-[#d0ccc6] to-[#bcb8b2] shadow-2xl"
+        className="absolute inset-0 rounded-[14px] overflow-hidden bg-gradient-to-br from-[#d0ccc6] to-[#bcb8b2] shadow-2xl"
         style={{ transformStyle: "preserve-3d" }}
       >
         <Image
@@ -193,13 +227,13 @@ const TheCard = () => {
           fill
           className="object-cover object-top"
         />
-        <div className="absolute bottom-0 left-0 right-0 p-5 pt-12 bg-linear-to-t from-black/70 to-transparent text-white">
+        <div className="absolute bottom-0 left-0 right-0 p-5 pt-12 bg-gradient-to-t from-black/70 to-transparent text-white">
           <div className="text-[1rem] font-bold">Dr. Prajyot Patil</div>
           <div className="text-[0.62rem] opacity-60 tracking-[0.09em] uppercase mt-1">
             PHD | University Name
           </div>
         </div>
-        <div className="absolute top-3.5 right-3.5 text-[0.52rem] font-bold tracking-[0.14em] uppercase bg-white/20 backdrop-blur-sm border border-white/20 text-white rounded-lg px-2.25 py-1">
+        <div className="absolute top-3.5 right-3.5 text-[0.52rem] font-bold tracking-[0.14em] uppercase bg-white/20 backdrop-blur-sm border border-white/20 text-white rounded-[4px] px-[9px] py-1">
           Founder
         </div>
       </div>
