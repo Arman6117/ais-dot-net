@@ -18,7 +18,7 @@ const navLinks = [
 ];
 
 const contact = [
-  { icon: Phone,   value: "+91 98765 43210",          href: "tel:+919975707273" },
+  { icon: Phone,   value: "+91 98765 43210",          href: "tel:+91 98765 43210" },
   { icon: Mail,    value: "info@aissolutions.in",     href: "mailto:info@aissolutions.in" },
   { icon: MapPin,  value: "Pune, Maharashtra, India", href: "#" },
 ];

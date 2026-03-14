@@ -1,4 +1,4 @@
-import { BarChart2, BookMarked, BookOpen, Briefcase, ClipboardList, Code2, Cpu, Database, FileText, Globe, GraduationCap, Layers, LineChart, PieChart, Users } from "lucide-react";
+import { BarChart2, BookMarked, BookOpen, Brain, Briefcase, ClipboardList, Code2, Cpu, Database, FileText, Globe, GraduationCap, Layers, LineChart, PieChart, Users } from "lucide-react";
 
 export const serviceGroups = [
     {
@@ -96,3 +96,136 @@ export const serviceGroups = [
       mesh: "radial-gradient(ellipse at 25% 25%, #a3e63528 0%, transparent 60%), radial-gradient(ellipse at 70% 75%, #65a30d28 0%, transparent 50%)",
     },
   ];
+
+
+export  const services = [
+    {
+      id: 1,
+      title: "Data Collection Survey",
+      tagline: "Comprehensive data gathering for research and business insights.",
+      accent: "#4ade80",
+      bg: "#0d3b2e",
+      icon: ClipboardList,
+      features: [
+        "Real-time Data Gathering",
+        "Custom Survey Design",
+        "Field & Online Methods",
+        "Accurate Targeting",
+        "Detailed Reporting",
+      ],
+      description: "We ensure accurate and timely data tailored to your goals. From designing the questionnaire to deploying it at scale — we handle everything so you get clean, usable data.",
+    },
+    {
+      id: 2,
+      title: "Data Analytics",
+      tagline: "Transform raw data into valuable insights that drive decisions.",
+      accent: "#a78bfa",
+      bg: "#1e1b4b",
+      icon: BarChart2,
+      features: [
+        "Descriptive & Predictive Analytics",
+        "Custom Dashboards",
+        "Big Data Handling",
+        "Business Intelligence Reporting",
+        "Performance Optimization",
+      ],
+      description: "Our analytics services empower you to uncover trends, optimize performance and predict outcomes. We bring clarity to complexity.",
+    },
+    {
+      id: 3,
+      title: "AI & ML Service",
+      tagline: "Automate, optimize and innovate with intelligent models.",
+      accent: "#22d3ee",
+      bg: "#042f2e",
+      icon: Brain,
+      features: [
+        "Custom AI Models",
+        "Data-Driven Insights",
+        "Deep Learning",
+        "Process Automation",
+        "Model Testing & Optimization",
+      ],
+      description: "Unlock the power of Artificial Intelligence and Machine Learning to transform your business processes. Our services deliver smart models tailored for data-driven decision-making.",
+    },
+    {
+      id: 4,
+      title: "Statistical Analysis",
+      tagline: "Advanced data analysis for academic and corporate needs.",
+      accent: "#fb7185",
+      bg: "#3b0f1f",
+      icon: LineChart,
+      features: [
+        "Hypothesis Testing",
+        "Regression Analysis",
+        "Data Modeling",
+        "Trend Forecasting",
+        "Visual Dashboards",
+      ],
+      description: "We turn raw numbers into valuable insights using SPSS, R, and Python. Whether for your PhD thesis or corporate report — we make data speak clearly.",
+    },
+    {
+      id: 5,
+      title: "PhD Assistance & Guidance",
+      tagline: "From topic selection to Scopus publication — we've got you.",
+      accent: "#fb923c",
+      bg: "#431407",
+      icon: GraduationCap,
+      features: [
+        "Topic Selection",
+        "Literature Review",
+        "Questionnaire Design",
+        "Implementation Support",
+        "Paper & Thesis Writing",
+      ],
+      description: "Helping research scholars navigate thesis writing, research methodology, and publication support. Your academic success is our priority — 500+ PhD scholars guided.",
+    },
+    {
+      id: 6,
+      title: "Web Development",
+      tagline: "Modern websites built from frontend to backend.",
+      accent: "#a3e635",
+      bg: "#18181b",
+      icon: Code2,
+      features: [
+        "UI/UX Design",
+        "Frontend & Backend",
+        "SEO Optimization",
+        "Database Integration",
+        "Responsive Layouts",
+      ],
+      description: "Creating performant, beautiful websites that represent your brand professionally. We handle everything from design to deployment so your online presence stands out.",
+    },
+    {
+      id: 7,
+      title: "Corporate Training & Workshops",
+      tagline: "Upskill your workforce for the modern era.",
+      accent: "#f472b6",
+      bg: "#2d1b3d",
+      icon: BookOpen,
+      features: [
+        "Soft Skills & Leadership",
+        "Tech & Tools Mastery",
+        "Custom Programs",
+        "Outcome-focused Training",
+        "Group & One-on-One",
+      ],
+      description: "Professional training sessions for employees, organizations, and researchers. We design immersive, practical workshops that create real change in capabilities.",
+    },
+    {
+      id: 8,
+      title: "Internship Opportunities",
+      tagline: "Real-world experience for students and graduates.",
+      accent: "#34d399",
+      bg: "#064e3b",
+      icon: Briefcase,
+      features: [
+        "Live Projects",
+        "Skill Development",
+        "Certification Provided",
+        "Online/Offline Options",
+        "Expert Mentorship",
+      ],
+      description: "Hands-on industry experience in various domains. We bridge the gap between learning and working — helping students build portfolios that actually get them hired.",
+    },
+  ];
+  

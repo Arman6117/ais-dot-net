@@ -8,6 +8,7 @@ import TransitionLink from "./transition-link";
 const navLinks = [
   { label: "Home", href: "/" },
   { label: "About", href: "/about" },
+  { label: "Services", href: "/services" },
   { label: "Contact", href: "/contact" },
   { label: "Careers", href: "/careers" },
 ];
