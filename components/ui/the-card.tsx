@@ -222,7 +222,7 @@ const TheCard = () => {
         style={{ transformStyle: "preserve-3d" }}
       >
         <Image
-          src="/foundplaceholder.jpg"
+          src="/founder.jpg"
           alt="Founder"
           fill
           className="object-cover object-top"
@@ -230,7 +230,7 @@ const TheCard = () => {
         <div className="absolute bottom-0 left-0 right-0 p-5 pt-12 bg-gradient-to-t from-black/70 to-transparent text-white">
           <div className="text-[1rem] font-bold">Dr. Prajyot Patil</div>
           <div className="text-[0.62rem] opacity-60 tracking-[0.09em] uppercase mt-1">
-            PHD | University Name
+            PHD | Louisiana University
           </div>
         </div>
         <div className="absolute top-3.5 right-3.5 text-[0.52rem] font-bold tracking-[0.14em] uppercase bg-white/20 backdrop-blur-sm border border-white/20 text-white rounded-[4px] px-[9px] py-1">

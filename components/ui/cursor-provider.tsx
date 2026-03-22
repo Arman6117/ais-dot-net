@@ -103,13 +103,13 @@ export default function CursorProvider({
       <div
         ref={gridRef}
         className="fixed -inset-12.5 pointer-events-none z-0 opacity-[0.05]"
-        style={{
-          backgroundImage: `
-            linear-gradient(to right, #1A56DB 1px, transparent 1px),
-            linear-gradient(to bottom, #1A56DB 1px, transparent 1px)
-          `,
-          backgroundSize: "40px 40px",
-        }}
+        // style={{
+        //   backgroundImage: `
+        //     linear-gradient(to right, #1A56DB 1px, transparent 1px),
+        //     linear-gradient(to bottom, #1A56DB 1px, transparent 1px)
+        //   `,
+        //   backgroundSize: "40px 40px",
+        // }}
       />
 
       <div

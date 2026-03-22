@@ -61,7 +61,7 @@ export default function FounderSection() {
             style={{ border: "1px solid rgba(0,0,0,0.08)" }}
           >
             <Image
-              src="/foundplaceholder.jpg"
+              src="/founder.jpg"
               alt="Mr. Prajyot S. Patil"
               fill
               className="object-cover object-top"

@@ -46,7 +46,7 @@ export default function OtherServicesSection() {
             </span>
           </div>
           <h2 className="text-[clamp(2.2rem,4vw,3.8rem)] font-extrabold leading-[1.05] tracking-[-0.03em] text-[#111]">
-            Other Services
+            IT Services
           </h2>
         </div>
         <p className="hidden sm:block text-[0.75rem] text-black/40 max-w-[200px] text-right leading-relaxed">

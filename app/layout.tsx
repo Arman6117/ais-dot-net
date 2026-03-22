@@ -26,7 +26,7 @@ export default function RootLayout({
     <html lang="en">
       <body className={`p-6 ${dmSans.className} bg-[#FAF9F6]`}>
         <TransitionProvider>
-          <LoaderProvider>
+      <LoaderProvider>
             <CursorProvider>
               <Loader />
               <Navbar />
