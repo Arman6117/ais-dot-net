@@ -10,7 +10,7 @@ const contactItems = [
     label: "Phone",
     value: "+91 99757 07273",
     sub: "Mon–Sat, 9am–7pm IST",
-    href: "tel:+91 98765 43210",
+    href: "tel:+91 99757 07273",
     accent: "#1A56DB",
   },
   {
@@ -21,18 +21,18 @@ const contactItems = [
     href: "mailto:info@aissolutions.net",
     accent: "#4ade80",
   },
-  {
+  { 
     icon: MapPin,
     label: "Office Address",
-    value: "Office No. 2, 1st Floor, Kudale Patil Palace",
-    sub: "Sinhgad Rd, near MI store, Bramha Hotel, Manikbag, Pune – 411051",
+    value: "Office No 2, 1st Floor, Anand Sagar Building,",
+    sub: "Sinhgad Rd, near Naturals, above Bata Store, Mahalakshmi Society, Varshanand Society, Anand Nagar, Pune, Maharashtra 411051",
     href: "https://maps.google.com/?q=Kudale+Patil+Palace+Sinhgad+Road+Manikbag+Pune",
     accent: "#fb923c",
   },
   {
     icon: Clock,
     label: "Working Hours",
-    value: "Mon – Saturday",
+    value: "Mon – Friday",
     sub: "9:00 AM – 7:00 PM IST",
     href: null,
     accent: "#a78bfa",
