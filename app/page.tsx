@@ -15,14 +15,12 @@ import TheCard from "@/components/ui/the-card";
 export default function Home() {
   return (
     <main className="">
-      <Magnetic strength={0.15}>
-        <TheCard />
-      </Magnetic>
+      
       <Hero />
-      <ServicesSection />
-      <AboutSection />
       <JourneyTimeline/>
       <ServiceCategories/>
+      <AboutSection />
+      <ServicesSection />
       <OtherServicesSection />
   <WhyChooseUs/>
       <StatsSection />

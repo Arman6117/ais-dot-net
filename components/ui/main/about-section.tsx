@@ -3,6 +3,8 @@ import { Instrument_Serif } from "next/font/google";
 import { useEffect, useRef } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
+import Image from "next/image";
+import TheCard from "../the-card";
 
 const instrumentSerif = Instrument_Serif({
   weight: "400",
@@ -17,6 +19,7 @@ export default function AboutSection() {
   const headlineRef = useRef<HTMLDivElement>(null);
   const bodyRef = useRef<HTMLDivElement>(null);
   const statsRef = useRef<HTMLDivElement>(null);
+  const cardRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     gsap.registerPlugin(ScrollTrigger);
@@ -27,6 +30,7 @@ export default function AboutSection() {
         headlineRef.current,
         bodyRef.current,
         statsRef.current,
+        cardRef.current,
       ],
       { opacity: 0, y: 30 },
       {
@@ -50,101 +54,102 @@ export default function AboutSection() {
     <section
       id="about"
       ref={sectionRef}
-      className={`${instrumentSerif.variable} relative z-1 px-5 sm:px-8 lg:px-13 py-24`}
+      className={`${instrumentSerif.variable} relative z-1 px-5 sm:px-8 lg:px-13 py-24 bg-gradient-to-b from-white to-gray-50/30`}
     >
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 lg:gap-24 items-start">
-        {/* ── Left: founder card anchor ── */}
-        {/* Left anchor — hidden on mobile */}
-        <div className="hidden lg:flex items-start justify-center pt-8">
-          <div id="aboutAnchor" className="w-[260px] h-[340px]" />
-        </div>
-        {/* ── Right: text content ── */}
-        <div className="flex flex-col gap-8">
-          {/* Eyebrow */}
-          <div
-            ref={eyebrowRef}
-            className="flex items-center gap-2.25 opacity-0"
-          >
-            <div className="w-5.5 h-[1.5px] bg-[#1A56DB]" />
-            <span className="text-[0.6rem] font-bold tracking-[0.24em] uppercase text-[#1A56DB]">
-              Who We Are
-            </span>
-          </div>
+      <div className="max-w-7xl mx-auto">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 lg:gap-24 items-start">
+          {/* ── Left: Founder Card ── */}
+       <TheCard/>
 
-          {/* Headline */}
-          <div ref={headlineRef} className="opacity-0">
-            <h2 className="font-serif italic text-[clamp(2.2rem,4vw,3.8rem)] leading-[1.05] tracking-[-0.02em] text-[#111]">
-              Building a thriving
-              <br />
-              <span className="text-[#1A56DB]">Analytics Ecosystem</span>
-            </h2>
-          </div>
-
-          {/* Body */}
-          <div ref={bodyRef} className="opacity-0 flex flex-col gap-4">
-            <p className="text-[0.88rem] text-black/60 leading-[1.8]">
-              AIS Solutions Pvt. Ltd. is a leading consulting and solutions
-              company based in Pune, founded with a vision to empower
-              individuals and businesses through real-world, industry-driven
-              analytics training and innovative data solutions.
-            </p>
-            <p className="text-[0.88rem] text-black/60 leading-[1.8]">
-              In today&apos;s digital era, data is generated at an unprecedented
-              rate. The true challenge lies in extracting meaningful insights to
-              drive smarter decisions. We believe data holds immense potential —
-              unlocking its value requires the right approach, the right
-              guidance, and the right partner.
-            </p>
-            <p className="text-[0.88rem] text-black/60 leading-[1.8]">
-              Beyond analytics, we have guided 500+ PhD scholars across Pune
-              through every stage of their research journey — from topic
-              selection to Scopus publication and viva preparation.
-            </p>
-          </div>
-
-          {/* Stats + CTA */}
-          <div ref={statsRef} className="opacity-0 flex flex-col sm:flex-row sm:items-end gap-6 pt-4 border-t border-black/[0.06]">            <div>
-              <div className="font-serif italic text-[3.5rem] leading-1 text-[#111] tracking-[-0.03em]">
-                15<span className="text-[#1A56DB]">+</span>
-              </div>
-              <div className="text-[0.62rem] font-bold tracking-[0.18em] uppercase text-black/35 mt-6">
-                Years of Experience
-              </div>
-            </div>
-
-            <div className="w-px h-12 bg-black/6" />
-
-            <div>
-              <div className="font-serif italic text-[3.5rem] leading-1 text-[#111] tracking-[-0.03em]">
-                Pune
-              </div>
-              <div className="text-[0.62rem] font-bold tracking-[0.18em] uppercase text-black/35 mt-6">
-                Maharashtra, India
-              </div>
-            </div>
-
-            <a
-              href="/about"
-              className="group ml-auto relative inline-flex items-center gap-2.25 px-5.5 py-3 bg-[#111] text-[#FDFCF9] text-[0.72rem] font-bold tracking-[0.04em] no-underline overflow-hidden rounded-[6px]"
+          {/* ── Right: text content ── */}
+          <div className="flex flex-col gap-8">
+            {/* Eyebrow */}
+            <div
+              ref={eyebrowRef}
+              className="flex items-center gap-2.25 opacity-0"
             >
-              <span className="absolute inset-0 bg-[#1A56DB] scale-x-0 origin-left transition-transform duration-400 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:scale-x-100 z-0 rounded-[6px]" />
-              <span className="relative z-10">Our Story</span>
-              <svg
-                className="relative z-10 transition-transform duration-300 group-hover:translate-x-1"
-                width="13"
-                height="13"
-                viewBox="0 0 13 13"
-                fill="none"
+              <div className="w-5.5 h-[1.5px] bg-[#1A56DB]" />
+              <span className="text-[0.6rem] font-bold tracking-[0.24em] uppercase text-[#1A56DB]">
+                Who We Are
+              </span>
+            </div>
+
+            {/* Headline */}
+            <div ref={headlineRef} className="opacity-0">
+              <h2 className="font-serif italic text-[clamp(2.2rem,4vw,3.8rem)] leading-[1.05] tracking-[-0.02em] text-[#111]">
+                Building a thriving
+                <br />
+                <span className="text-[#1A56DB]">Analytics Ecosystem</span>
+              </h2>
+            </div>
+
+            {/* Body */}
+            <div ref={bodyRef} className="opacity-0 flex flex-col gap-4">
+              <p className="text-[0.88rem] text-black/70 leading-[1.8]">
+                AIS Solutions Pvt. Ltd. is a leading consulting and solutions
+                company based in Pune, founded with a vision to empower
+                individuals and businesses through real-world, industry-driven
+                analytics training and innovative data solutions.
+              </p>
+              <p className="text-[0.88rem] text-black/70 leading-[1.8]">
+                In today&apos;s digital era, data is generated at an unprecedented
+                rate. The true challenge lies in extracting meaningful insights to
+                drive smarter decisions. We believe data holds immense potential —
+                unlocking its value requires the right approach, the right
+                guidance, and the right partner.
+              </p>
+              <p className="text-[0.88rem] text-black/70 leading-[1.8]">
+                Beyond analytics, we have guided 500+ PhD scholars across Pune
+                through every stage of their research journey — from topic
+                selection to Scopus publication and viva preparation.
+              </p>
+            </div>
+
+            {/* Stats + CTA */}
+            <div ref={statsRef} className="opacity-0 flex flex-col sm:flex-row sm:items-end gap-6 pt-4 border-t border-black/[0.06]">
+              <div>
+                <div className="font-serif italic text-[3.5rem] leading-1 text-[#111] tracking-[-0.03em]">
+                  15<span className="text-[#1A56DB]">+</span>
+                </div>
+                <div className="text-[0.62rem] font-bold tracking-[0.18em] uppercase text-black/40 mt-2">
+                  Years of Experience
+                </div>
+              </div>
+
+              <div className="w-px h-12 bg-black/10 hidden sm:block" />
+
+              <div>
+                <div className="font-serif italic text-[3.5rem] leading-1 text-[#111] tracking-[-0.03em]">
+                  Pune
+                </div>
+                <div className="text-[0.62rem] font-bold tracking-[0.18em] uppercase text-black/40 mt-2">
+                  Maharashtra, India
+                </div>
+              </div>
+
+              <a
+                href="/about"
+                className="group ml-auto relative inline-flex items-center gap-2.25 px-5.5 py-3 bg-[#111] text-[#FDFCF9] text-[0.72rem] font-bold tracking-[0.04em] no-underline overflow-hidden rounded-[6px] hover:shadow-lg transition-all duration-300"
               >
-                <path
-                  d="M1.5 6.5h10M7 2l4.5 4.5L7 11"
-                  stroke="currentColor"
-                  strokeWidth="1.7"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                />
-              </svg>
-            </a>
+                <span className="absolute inset-0 bg-[#1A56DB] scale-x-0 origin-left transition-transform duration-400 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:scale-x-100 z-0 rounded-[6px]" />
+                <span className="relative z-10">Our Story</span>
+                <svg
+                  className="relative z-10 transition-transform duration-300 group-hover:translate-x-1"
+                  width="13"
+                  height="13"
+                  viewBox="0 0 13 13"
+                  fill="none"
+                >
+                  <path
+                    d="M1.5 6.5h10M7 2l4.5 4.5L7 11"
+                    stroke="currentColor"
+                    strokeWidth="1.7"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                  />
+                </svg>
+              </a>
+            </div>
           </div>
         </div>
       </div>
