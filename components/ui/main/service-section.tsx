@@ -5,6 +5,7 @@ import { useEffect, useRef } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import ServiceCard from "./service-card";
+import Eyebrow from "@/components/eyebrow";
 
 const instrumentSerif = Instrument_Serif({
   weight: "400",
@@ -51,10 +52,7 @@ export default function ServicesSection() {
       {/* Section header */}
       <div className="mb-16 text-center">
         <div className="flex items-center justify-center gap-2.25 mb-3">
-          <div className="w-5.5 h-[1.5px] bg-[#1A56DB]" />
-          <span className="text-[0.6rem] font-bold tracking-[0.24em] uppercase text-[#1A56DB]">
-            What We Do
-          </span>
+          <Eyebrow>  What We Do</Eyebrow>
           <div className="w-5.5 h-[1.5px] bg-[#1A56DB]" />
         </div>
         <h2 className="font-serif italic text-[clamp(2.2rem,4vw,3.8rem)] leading-[1.1] tracking-[-0.02em] text-[#111]">

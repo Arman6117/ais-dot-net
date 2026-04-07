@@ -62,12 +62,12 @@ export default function FounderSection() {
           >
             <Image
               src="/founder.jpg"
-              alt="Mr. Prajyot S. Patil"
+              alt="Dr. Prajyot S. Patil"
               fill
               className="object-cover object-top"
             />
             <div className="absolute bottom-0 left-0 right-0 p-6 pt-14 bg-gradient-to-t from-black/80 to-transparent text-white">
-              <div className="text-[1.1rem] font-bold">Mr. Prajyot S. Patil</div>
+              <div className="text-[1.1rem] font-bold">Dr. Prajyot S. Patil</div>
               <div className="text-[0.65rem] opacity-60 tracking-[0.1em] uppercase mt-1">
                 Founder & CEO
               </div>

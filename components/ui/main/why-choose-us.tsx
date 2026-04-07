@@ -4,6 +4,7 @@ import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { Star, Lightbulb, BadgeCheck, ShieldOff } from "lucide-react";
 import { Instrument_Serif } from "next/font/google";
+import Eyebrow from "@/components/eyebrow";
 
 const instrumentSerif = Instrument_Serif({
   weight: "400",
@@ -37,26 +38,36 @@ const reasons = [
 
 export default function WhyChooseUs() {
   const sectionRef = useRef<HTMLElement>(null);
-  const headerRef  = useRef<HTMLDivElement>(null);
+  const headerRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     gsap.registerPlugin(ScrollTrigger);
 
-    gsap.fromTo(headerRef.current,
+    gsap.fromTo(
+      headerRef.current,
       { opacity: 0, y: 24 },
       {
-        opacity: 1, y: 0, duration: 0.8, ease: "power3.out",
-        scrollTrigger: { id: "why-header", trigger: sectionRef.current, start: "top 80%" },
+        opacity: 1,
+        y: 0,
+        duration: 0.8,
+        ease: "power3.out",
+        scrollTrigger: {
+          id: "why-header",
+          trigger: sectionRef.current,
+          start: "top 80%",
+        },
       }
     );
 
     const cards = sectionRef.current?.querySelectorAll(".why-card");
     if (!cards) return;
 
-    gsap.fromTo(cards,
+    gsap.fromTo(
+      cards,
       { opacity: 0, y: 40 },
       {
-        opacity: 1, y: 0,
+        opacity: 1,
+        y: 0,
         duration: 0.7,
         ease: "power3.out",
         stagger: 0.12,
@@ -80,23 +91,28 @@ export default function WhyChooseUs() {
       className={`${instrumentSerif.variable} relative z-[1] px-5 sm:px-8 lg:px-[52px] py-24 overflow-hidden`}
     >
       {/* Glow */}
-      <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[600px] h-[200px] blur-[100px] opacity-[0.05] pointer-events-none"
-        style={{ background: "radial-gradient(circle, #1A56DB, transparent)" }} />
+      <div
+        className="absolute top-0 left-1/2 -translate-x-1/2 w-[600px] h-[200px] blur-[100px] opacity-[0.05] pointer-events-none"
+        style={{ background: "radial-gradient(circle, #1A56DB, transparent)" }}
+      />
 
       {/* Header */}
-      <div ref={headerRef} className="opacity-0 text-center mb-16 max-w-[680px] mx-auto">
+      <div
+        ref={headerRef}
+        className="opacity-0 text-center mb-16 max-w-[680px] mx-auto"
+      >
         <div className="flex items-center justify-center gap-[9px] mb-4">
-          <div className="w-[22px] h-[1.5px] bg-[#1A56DB]" />
-          <span className="text-[0.6rem] font-bold tracking-[0.24em] uppercase text-[#1A56DB]">
-            Why AIS Solutions
-          </span>
+          <Eyebrow>Why AIS Solutions</Eyebrow>
           <div className="w-[22px] h-[1.5px] bg-[#1A56DB]" />
         </div>
         <h2 className="font-[family-name:var(--font-serif)] italic text-[clamp(2.2rem,4vw,3.5rem)] leading-[1.05] tracking-[-0.02em] text-[#111] mb-5">
           Why Choose Us
         </h2>
         <p className="text-[0.88rem] text-black/50 leading-[1.85]">
-          Choose us for expert-driven, tailored solutions that ensure precision, quality, and timely delivery in all your academic and publication needs. Experience excellence that transforms your ideas into impactful results.
+          Choose us for expert-driven, tailored solutions that ensure precision,
+          quality, and timely delivery in all your academic and publication
+          needs. Experience excellence that transforms your ideas into impactful
+          results.
         </p>
       </div>
 
@@ -115,13 +131,17 @@ export default function WhyChooseUs() {
             {/* Hover glow */}
             <div
               className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 rounded-[20px]"
-              style={{ background: `radial-gradient(ellipse at 50% 100%, ${accent}10, transparent 70%)` }}
+              style={{
+                background: `radial-gradient(ellipse at 50% 100%, ${accent}10, transparent 70%)`,
+              }}
             />
 
             {/* Top accent line */}
             <div
               className="absolute top-0 left-0 right-0 h-[2px] rounded-t-[20px] scale-x-0 group-hover:scale-x-100 transition-transform duration-500 origin-left"
-              style={{ background: `linear-gradient(90deg, ${accent}, transparent)` }}
+              style={{
+                background: `linear-gradient(90deg, ${accent}, transparent)`,
+              }}
             />
 
             {/* Icon */}
@@ -137,7 +157,9 @@ export default function WhyChooseUs() {
             </div>
 
             {/* Title */}
-            <h3 className="text-[0.95rem] font-bold text-[#111] leading-[1.4]">{title}</h3>
+            <h3 className="text-[0.95rem] font-bold text-[#111] leading-[1.4]">
+              {title}
+            </h3>
           </div>
         ))}
       </div>

@@ -5,6 +5,7 @@ import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import Image from "next/image";
 import TheCard from "../the-card";
+import Eyebrow from "@/components/eyebrow";
 
 const instrumentSerif = Instrument_Serif({
   weight: "400",
@@ -59,7 +60,7 @@ export default function AboutSection() {
       <div className="max-w-7xl mx-auto">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 lg:gap-24 items-start">
           {/* ── Left: Founder Card ── */}
-       <TheCard/>
+          <TheCard />
 
           {/* ── Right: text content ── */}
           <div className="flex flex-col gap-8">
@@ -68,10 +69,7 @@ export default function AboutSection() {
               ref={eyebrowRef}
               className="flex items-center gap-2.25 opacity-0"
             >
-              <div className="w-5.5 h-[1.5px] bg-[#1A56DB]" />
-              <span className="text-[0.6rem] font-bold tracking-[0.24em] uppercase text-[#1A56DB]">
-                Who We Are
-              </span>
+              <Eyebrow> Who We Are</Eyebrow>
             </div>
 
             {/* Headline */}
@@ -92,11 +90,11 @@ export default function AboutSection() {
                 analytics training and innovative data solutions.
               </p>
               <p className="text-[0.88rem] text-black/70 leading-[1.8]">
-                In today&apos;s digital era, data is generated at an unprecedented
-                rate. The true challenge lies in extracting meaningful insights to
-                drive smarter decisions. We believe data holds immense potential —
-                unlocking its value requires the right approach, the right
-                guidance, and the right partner.
+                In today&apos;s digital era, data is generated at an
+                unprecedented rate. The true challenge lies in extracting
+                meaningful insights to drive smarter decisions. We believe data
+                holds immense potential — unlocking its value requires the right
+                approach, the right guidance, and the right partner.
               </p>
               <p className="text-[0.88rem] text-black/70 leading-[1.8]">
                 Beyond analytics, we have guided 500+ PhD scholars across Pune
@@ -106,7 +104,10 @@ export default function AboutSection() {
             </div>
 
             {/* Stats + CTA */}
-            <div ref={statsRef} className="opacity-0 flex flex-col sm:flex-row sm:items-end gap-6 pt-4 border-t border-black/[0.06]">
+            <div
+              ref={statsRef}
+              className="opacity-0 flex flex-col sm:flex-row sm:items-end gap-6 pt-4 border-t border-black/[0.06]"
+            >
               <div>
                 <div className="font-serif italic text-[3.5rem] leading-1 text-[#111] tracking-[-0.03em]">
                   15<span className="text-[#1A56DB]">+</span>

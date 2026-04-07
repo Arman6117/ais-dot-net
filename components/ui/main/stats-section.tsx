@@ -2,6 +2,7 @@
 import { useEffect, useRef } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
+import Eyebrow from "@/components/eyebrow";
 
 const stats = [
   { value: 99,  suffix: "%", label: "Success in getting happy customers" },
@@ -116,10 +117,9 @@ export default function StatsSection() {
       {/* Header */}
       <div className="mb-12">
         <div className="flex items-center gap-[9px] mb-3">
-          <div className="w-[22px] h-[1.5px] bg-[#1A56DB]" />
-          <span className="text-[0.6rem] font-bold tracking-[0.24em] uppercase text-[#1A56DB]">
-            By The Numbers
-          </span>
+         <Eyebrow>
+         By The Numbers
+         </Eyebrow>
         </div>
         <h2 className="text-[clamp(2rem,4vw,3.2rem)] font-extrabold leading-[1.05] tracking-[-0.03em] text-[#111]">
           Results that speak<br />for themselves

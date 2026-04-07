@@ -8,6 +8,7 @@ import Magnetic from "../magnetic";
 import { ArrowRight } from "lucide-react";
 import { useCursor } from "@/context/cursor-context";
 import TheCard from "@/components/ui/the-card"
+import Eyebrow from "@/components/eyebrow";
 
 const instrumentSerif = Instrument_Serif({
   weight: "400",
@@ -89,18 +90,16 @@ const Hero = () => {
                 ref={eyebrowRef}
                 className="flex items-center gap-2.25 mb-5.5 opacity-0 translate-y-2.5"
               >
-                <div className="w-5.5 h-[1.5px] bg-[#1A56DB]" />
-                <span className="text-[0.6rem] font-bold tracking-[0.24em] uppercase text-[#1A56DB]">
+               <Eyebrow >
                   PhD Research Consulting
-                </span>
+               </Eyebrow>
               </div>
-              
               {/* Headlines */}
               <div className="overflow-hidden">
                 <span
                   ref={hl1Ref}
                   style={{ display: "block", transform: "translateY(105%)" }}
-                  className="font-serif italic text-[clamp(2.8rem,8vw,7rem)] leading-[0.9] tracking-[-0.025em] text-[#111]"
+                  className="font-serif py-2.5 italic text-[clamp(2.8rem,8vw,7rem)] leading-[0.9] tracking-[-0.025em] text-[#111]"
                 >
                   Guiding Scholars
                 </span>
@@ -118,7 +117,7 @@ const Hero = () => {
                 <span
                   ref={hl3Ref}
                   style={{ display: "block", transform: "translateY(105%)" }}
-                  className="font-serif italic text-[clamp(2.8rem,8vw,7rem)] leading-[0.9] tracking-[-0.025em] text-[#111]"
+                  className="font-serif py-2.5 italic text-[clamp(2.8rem,8vw,7rem)] leading-[0.9] tracking-[-0.025em] text-[#111]"
                 >
                   to Recognition.
                 </span>

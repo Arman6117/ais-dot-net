@@ -11,6 +11,7 @@ import Autoplay from "embla-carousel-autoplay";
 
 import { useRef } from "react";
 import ServiceSlide from "./service-slide";
+import Eyebrow from "@/components/eyebrow";
 
 
 
@@ -40,10 +41,9 @@ export default function OtherServicesSection() {
       <div className="flex items-end justify-between mb-10">
         <div>
           <div className="flex items-center gap-[9px] mb-3">
-            <div className="w-[22px] h-[1.5px] bg-[#1A56DB]" />
-            <span className="text-[0.6rem] font-bold tracking-[0.24em] uppercase text-[#1A56DB]">
-              Beyond PhD
-            </span>
+           <Eyebrow>
+           Beyond PhD
+           </Eyebrow>
           </div>
           <h2 className="text-[clamp(2.2rem,4vw,3.8rem)] font-extrabold leading-[1.05] tracking-[-0.03em] text-[#111]">
             IT Services
