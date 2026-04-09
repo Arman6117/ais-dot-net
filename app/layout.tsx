@@ -6,6 +6,7 @@ import Navbar from "@/components/ui/navbar";
 import CursorProvider from "@/components/ui/cursor-provider";
 import { LoaderProvider } from "@/context/loader-context";
 import { TransitionProvider } from "@/context/transition-context";
+import SocialSidebar from "@/components/ui/social-sidebar";
 
 const dmSans = DM_Sans({
   variable: "--font-dm-sans",
@@ -30,6 +31,7 @@ export default function RootLayout({
             <CursorProvider>
               <Loader />
               <Navbar />
+              <SocialSidebar/>
               {children}
             </CursorProvider>
           </LoaderProvider>
