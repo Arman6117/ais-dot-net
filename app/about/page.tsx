@@ -16,7 +16,7 @@ export default function AboutPage() {
       <AboutHero />
       <FounderSection />
       <MissionStrip />
-      <TeamsSection />
+      {/* <TeamsSection /> */}
       <TestimonialsSection />
       <StatsSection />
       <AboutCTA />

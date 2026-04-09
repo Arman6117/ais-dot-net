@@ -4,6 +4,9 @@ import { useEffect, useRef } from "react";
 import Image from "next/image";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
+import Link from "next/link";
+import { FaLinkedinIn } from "react-icons/fa";
+import { useCursor } from "@/context/cursor-context";
 
 const instrumentSerif = Instrument_Serif({
   weight: "400",
@@ -16,7 +19,7 @@ export default function FounderSection() {
   const sectionRef = useRef<HTMLElement>(null);
   const imgRef     = useRef<HTMLDivElement>(null);
   const textRef    = useRef<HTMLDivElement>(null);
-
+  const { setHovered } = useCursor();
   useEffect(() => {
     gsap.registerPlugin(ScrollTrigger);
 
@@ -68,8 +71,20 @@ export default function FounderSection() {
             />
             <div className="absolute bottom-0 left-0 right-0 p-6 pt-14 bg-gradient-to-t from-black/80 to-transparent text-white">
               <div className="text-[1.1rem] font-bold">Dr. Prajyot S. Patil</div>
+              <div className="flex gap-15">
+
               <div className="text-[0.65rem] opacity-60 tracking-[0.1em] uppercase mt-1">
                 Founder & CEO
+              </div>
+              <div className="relative size-6 p-0.5 hover:bg-blue-400 transition-all bg-white rounded-xs group left-10 z-10">
+                <Link
+                  href={"https://www.linkedin.com/in/dr-prajyot-s-patil-73a99a112/"}
+                  onMouseEnter={() => setHovered(true)}
+                  onMouseLeave={() => setHovered(false)}
+                  >
+                  <FaLinkedinIn className="size-5 text-black transition-colors group-hover:text-white " />
+                </Link>
+                  </div>
               </div>
             </div>
             {/* Blue accent corner */}

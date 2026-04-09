@@ -2,6 +2,7 @@
 import { Instrument_Serif } from "next/font/google";
 import { useEffect, useRef } from "react";
 import gsap from "gsap";
+import Eyebrow from "@/components/eyebrow";
 
 const instrumentSerif = Instrument_Serif({
   weight: "400",
@@ -41,10 +42,7 @@ export default function AboutHero() {
 
       {/* Eyebrow */}
       <div ref={eyebrowRef} className="flex items-center gap-[9px] mb-6 opacity-0">
-        <div className="w-[22px] h-[1.5px] bg-[#1A56DB]" />
-        <span className="text-[0.6rem] font-bold tracking-[0.24em] uppercase text-[#1A56DB]">
-          Our Story
-        </span>
+        <Eyebrow>Our Story</Eyebrow>
       </div>
 
       {/* Headline */}
