@@ -64,7 +64,7 @@ export default function FounderSection() {
             style={{ border: "1px solid rgba(0,0,0,0.08)" }}
           >
             <Image
-              src="/founder.jpg"
+              src="/founder.jpeg"
               alt="Dr. Prajyot S. Patil"
               fill
               className="object-cover object-top"
@@ -105,7 +105,7 @@ export default function FounderSection() {
           </h2>
 
           <p className="text-[0.88rem] text-black/60 leading-[1.8]">
-            Prajyot Patil is a visionary entrepreneur and the driving force behind AIS Solutions. With over 15 years of experience in the industry, he has transformed ideas into reality — leading the company with innovation, dedication, and passion.
+            Prajyot Patil is a visionary entrepreneur and the driving force behind AIS Solutions. With over 8 years of experience in the industry, he has transformed ideas into reality — leading the company with innovation, dedication, and passion.
           </p>
           <p className="text-[0.88rem] text-black/60 leading-[1.8]">
             Under his leadership, AIS Solutions has built a culture of excellence and creativity, making an impact in research consulting and setting new standards for PhD guidance across Pune and beyond.

@@ -89,7 +89,7 @@ const TheCard = () => {
         style={{ transformStyle: "preserve-3d" }}
       >
         <Image
-          src="/founder.jpg"
+          src="/founder.jpeg"
           alt="Dr. Prajyot S. Patil - Founder of AIS Solutions"
           fill
           className="object-cover object-top"
