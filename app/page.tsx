@@ -24,7 +24,7 @@ export default function Home() {
       <OtherServicesSection />
   <WhyChooseUs/>
       <StatsSection />
-      <MissionVision/>
+    
 
       <Footer />
     </main>

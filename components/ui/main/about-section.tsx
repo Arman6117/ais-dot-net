@@ -108,9 +108,9 @@ export default function AboutSection() {
               ref={statsRef}
               className="opacity-0 flex flex-col sm:flex-row sm:items-end gap-6 pt-4 border-t border-black/[0.06]"
             >
-              <div>
+              <div className="flex flex-col gap-3">
                 <div className="font-serif italic text-[3.5rem] leading-1 text-[#111] tracking-[-0.03em]">
-                  15<span className="text-[#1A56DB]">+</span>
+                  9<span className="text-[#1A56DB]">+</span>
                 </div>
                 <div className="text-[0.62rem] font-bold tracking-[0.18em] uppercase text-black/40 mt-2">
                   Years of Experience
@@ -119,7 +119,7 @@ export default function AboutSection() {
 
               <div className="w-px h-12 bg-black/10 hidden sm:block" />
 
-              <div>
+              <div className="flex flex-col gap-3">
                 <div className="font-serif italic text-[3.5rem] leading-1 text-[#111] tracking-[-0.03em]">
                   Pune
                 </div>

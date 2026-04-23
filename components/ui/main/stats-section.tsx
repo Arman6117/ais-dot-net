@@ -3,12 +3,13 @@ import { useEffect, useRef } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import Eyebrow from "@/components/eyebrow";
+import Link from "next/link";
 
 const stats = [
-  { value: 99,  suffix: "%", label: "Success in getting happy customers" },
-  { value: 25,  suffix: "K+", label: "Thousands of successful businesses" },
-  { value: 120, suffix: "+", label: "Total clients who love AIS Solutions" },
-  { value: 4.9, suffix: "★", label: "Stars reviews given by satisfied clients", decimal: true },
+  { value: 4.9, suffix: "★", label: "Stars reviews given by satisfied clients", decimal: true,url:"#" },
+  { value: 99,  suffix: "%", label: "Success in getting happy customers" ,url:"#"},
+  { value: 25,  suffix: "K+", label: "Thousands of successful businesses",url:"#" },
+  { value: 120, suffix: "+", label: "Total clients who love AIS Solutions",url:"#" },
 ];
 
 function StatCard({ stat, index }: { stat: typeof stats[0]; index: number }) {
@@ -129,9 +130,9 @@ export default function StatsSection() {
       {/* Stats grid */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
         {stats.map((stat, i) => (
-          <div key={i} className="stat-card opacity-0">
+          <Link href={stat.url} key={i} className="stat-card opacity-0">
             <StatCard stat={stat} index={i} />
-          </div>
+          </Link>
         ))}
       </div>
     </section>

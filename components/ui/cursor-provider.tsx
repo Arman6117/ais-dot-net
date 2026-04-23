@@ -1,7 +1,6 @@
 "use client";
 
-import { useState, useRef, useEffect } from "react";
-import gsap from "gsap";
+import { useRef, useEffect } from "react";
 import { CursorContext } from "@/context/cursor-context";
 
 export default function CursorProvider({
@@ -9,128 +8,106 @@ export default function CursorProvider({
 }: {
   children: React.ReactNode;
 }) {
-  const dotRef = useRef<HTMLDivElement>(null);
-  const ringRef = useRef<HTMLDivElement>(null);
-  const glowRef = useRef(null);
-  const gridRef = useRef(null);
-  const [hovered, setHovered] = useState(false);
+  const cursorTriangleRef = useRef<HTMLDivElement>(null);
+  const cursorSquareRef = useRef<HTMLDivElement>(null);
+  const cursorCrossRef = useRef<HTMLDivElement>(null);
+  const pos = useRef({ x: 0, y: 0 });
+  const frameRef = useRef(0);
+  const rotation = useRef(0);
 
   useEffect(() => {
-    if (!dotRef.current || !ringRef.current) return;
-
-    const xDot = gsap.quickTo(dotRef.current, "x", {
-      duration: 0.1,
-      ease: "power3",
-    });
-    const yDot = gsap.quickTo(dotRef.current, "y", {
-      duration: 0.1,
-      ease: "power3",
-    });
-
-    const xRing = gsap.quickTo(ringRef.current, "x", {
-      duration: 0.4,
-      ease: "power3",
-    });
-    const yRing = gsap.quickTo(ringRef.current, "y", {
-      duration: 0.4,
-      ease: "power3",
-    });
-    const xToGlow = gsap.quickTo(glowRef.current, "x", {
-      duration: 1.5,
-      ease: "power2.out",
-    });
-    const yToGlow = gsap.quickTo(glowRef.current, "y", {
-      duration: 1.5,
-      ease: "power2.out",
-    });
-
-    const xToGrid = gsap.quickTo(gridRef.current, "x", {
-      duration: 2,
-      ease: "power2.out",
-    });
-    const yToGrid = gsap.quickTo(gridRef.current, "y", {
-      duration: 2,
-      ease: "power2.out",
-    });
-
-    const move = (e: MouseEvent) => {
-      xDot(e.clientX);
-      yDot(e.clientY);
-
-      xRing(e.clientX);
-      yRing(e.clientY);
-      xToGlow(e.clientX);
-      yToGlow(e.clientY);
-      const moveX = (e.clientX / window.innerWidth - 0.5) * -20;
-      const moveY = (e.clientY / window.innerHeight - 0.5) * -20;
-      xToGrid(moveX);
-      yToGrid(moveY);
+    const onMove = (e: MouseEvent) => {
+      pos.current.x = e.clientX;
+      pos.current.y = e.clientY;
     };
+    window.addEventListener("mousemove", onMove);
 
-    window.addEventListener("mousemove", move);
+    const tick = () => {
+      rotation.current += 0.02;
+      
+      if (cursorTriangleRef.current) {
+        cursorTriangleRef.current.style.transform = `translate(${pos.current.x - 10}px, ${pos.current.y - 10}px) rotate(${rotation.current * 180}deg)`;
+      }
+      
+      if (cursorSquareRef.current) {
+        cursorSquareRef.current.style.transform = `translate(${pos.current.x - 6}px, ${pos.current.y - 6}px) rotate(${-rotation.current * 120}deg) scale(0.8)`;
+      }
+      
+      if (cursorCrossRef.current) {
+        cursorCrossRef.current.style.transform = `translate(${pos.current.x - 12}px, ${pos.current.y - 12}px) rotate(${rotation.current * 90}deg)`;
+      }
 
-    return () => window.removeEventListener("mousemove", move);
+      frameRef.current = requestAnimationFrame(tick);
+    };
+    tick();
+
+    return () => {
+      window.removeEventListener("mousemove", onMove);
+      cancelAnimationFrame(frameRef.current);
+    };
   }, []);
 
-  useEffect(() => {
-    if (!dotRef.current || !ringRef.current) return;
-
-    if (hovered) {
-      gsap.to(ringRef.current, {
-        width: 60,
-        height: 60,
-        borderColor: "#1A56DB",
-        background: "rgba(26,86,219,0.1)",
-        duration: 0.3,
-      });
-
-      gsap.to(dotRef.current, { scale: 0, duration: 0.2 });
+  const setHovered = (val: boolean) => {
+    if (!cursorTriangleRef.current || !cursorSquareRef.current) return;
+    
+    if (val) {
+      cursorTriangleRef.current.style.transform += " scale(1.5)";
+      cursorTriangleRef.current.style.opacity = "1";
+      cursorSquareRef.current.style.transform += " scale(1.8)";
+      cursorSquareRef.current.style.opacity = "0.6";
     } else {
-      gsap.to(ringRef.current, {
-        width: 40,
-        height: 40,
-        borderColor: "rgba(26,86,219,0.3)",
-        background: "transparent",
-        duration: 0.3,
-      });
-
-      gsap.to(dotRef.current, { scale: 1, duration: 0.2 });
+      cursorTriangleRef.current.style.transform = cursorTriangleRef.current.style.transform.replace(" scale(1.5)", "");
+      cursorTriangleRef.current.style.opacity = "0.6";
+      cursorSquareRef.current.style.transform = cursorSquareRef.current.style.transform.replace(" scale(1.8)", "");
+      cursorSquareRef.current.style.opacity = "0.3";
     }
-  }, [hovered]);
+  };
 
   return (
     <CursorContext.Provider value={{ setHovered }}>
+      {/* Triangle cursor */}
       <div
-        ref={gridRef}
-        className="fixed -inset-12.5 pointer-events-none z-0 opacity-[0.05]"
-        // style={{
-        //   backgroundImage: `
-        //     linear-gradient(to right, #1A56DB 1px, transparent 1px),
-        //     linear-gradient(to bottom, #1A56DB 1px, transparent 1px)
-        //   `,
-        //   backgroundSize: "40px 40px",
-        // }}
-      />
-
-      <div
-        ref={glowRef}
-        className="fixed top-0 left-0 w-[50vmax] h-[50vmax] rounded-full pointer-events-none -translate-x-1/2 -translate-y-1/2 z-0 opacity-40"
+        ref={cursorTriangleRef}
+        className="fixed top-0 left-0 pointer-events-none z-[9999] transition-all duration-200"
         style={{
-          background:
-            "radial-gradient(circle, rgba(26, 86, 219, 0.2) 0%, transparent 0%)",
-          filter: "blur(80px)",
+          width: 0,
+          height: 0,
+          borderLeft: "8px solid transparent",
+          borderRight: "8px solid transparent",
+          borderBottom: "16px solid #1A56DB",
+          opacity: 0.6,
+          filter: "drop-shadow(0 0 4px #1A56DB)",
+          transition: "all 0.15s ease",
         }}
       />
+      
+      {/* Square cursor */}
       <div
-        ref={dotRef}
-        className="fixed top-0 left-0 w-2 h-2 bg-blue-600 rounded-full pointer-events-none z-9999 -translate-x-1/2 -translate-y-1/2"
+        ref={cursorSquareRef}
+        className="fixed top-0 left-0 pointer-events-none z-[9998] transition-all duration-300"
+        style={{
+          width: "12px",
+          height: "12px",
+          background: "#8B5CF6",
+          opacity: 0.3,
+          transform: "rotate(45deg)",
+          transition: "all 0.2s ease",
+        }}
       />
-
+      
       <div
-        ref={ringRef}
-        className="fixed top-0 left-0 w-10 h-10 border border-blue-600/30 rounded-full pointer-events-none z-9998 -translate-x-1/2 -translate-y-1/2"
-      />
-
+        ref={cursorCrossRef}
+        className="fixed top-0 left-0 pointer-events-none z-[9997]"
+        style={{
+          width: "24px",
+          height: "24px",
+          position: "relative",
+        }}
+      >
+        <div className="absolute w-0.5 h-full bg-white/50 left-1/2 -translate-x-1/2" />
+        <div className="absolute w-full h-0.5 bg-white/50 top-1/2 -translate-y-1/2" />
+      </div>
+      
       {children}
     </CursorContext.Provider>
   );

@@ -101,11 +101,11 @@ export default function FounderSection() {
         <div ref={textRef} className="opacity-0 flex flex-col gap-6">
           <h2 className="font-[family-name:var(--font-serif)] italic text-[clamp(2rem,3.5vw,3rem)] leading-[1.1] tracking-[-0.02em] text-[#111]">
             A visionary built on<br />
-            <span className="text-[#1A56DB]">15 years of trust.</span>
+            <span className="text-[#1A56DB]">9 years of trust.</span>
           </h2>
 
           <p className="text-[0.88rem] text-black/60 leading-[1.8]">
-            Prajyot Patil is a visionary entrepreneur and the driving force behind AIS Solutions. With over 8 years of experience in the industry, he has transformed ideas into reality — leading the company with innovation, dedication, and passion.
+            Prajyot Patil is a visionary entrepreneur and the driving force behind AIS Solutions. With over 9 years of experience in the industry, he has transformed ideas into reality — leading the company with innovation, dedication, and passion.
           </p>
           <p className="text-[0.88rem] text-black/60 leading-[1.8]">
             Under his leadership, AIS Solutions has built a culture of excellence and creativity, making an impact in research consulting and setting new standards for PhD guidance across Pune and beyond.
@@ -118,7 +118,7 @@ export default function FounderSection() {
           <div className="flex items-center gap-10 pt-4 border-t border-black/[0.06]">
             <div>
               <div className="font-[family-name:var(--font-serif)] italic text-[2.8rem] leading-[1] text-[#111] tracking-[-0.03em]">
-                15<span className="text-[#1A56DB]">+</span>
+                9<span className="text-[#1A56DB]">+</span>
               </div>
               <div className="text-[0.62rem] font-bold tracking-[0.18em] uppercase text-black/35 mt-1">
                 Years Experience

@@ -18,30 +18,43 @@ const phdDropdownItems = [
   { label: "Journal Publication",       href: "/phd-services#journal-publication" },
 ];
 
+const itServicesDropdownItems = [
+  { label: "Data Collection Survey",    href: "/services#data-collection-survey" },
+  { label: "Data Analytics",            href: "/services#data-analytics" },
+  { label: "AI & ML Service",           href: "/services#ai-ml-service" },
+  { label: "Statistical Analysis",      href: "/services#statistical-analysis" },
+  { label: "PhD Assistance & Guidance", href: "/services#phd-assistance-guidance" },
+  { label: "Web Development",           href: "/services#web-development" },
+];
+
 const navLinks = [
-  { label: "Home",        href: "/" },
-  { label: "About",       href: "/about" },
-  { label: "PHD Services", href: "/phd-services", hasDropdown: true },
-  { label: "IT Services", href: "/services" },
-  { label: "Contact",     href: "/contact" },
-  { label: "Careers",     href: "/careers" },
+  { label: "Home",         href: "/" },
+  { label: "About",        href: "/about" },
+  { label: "PHD Services", href: "/phd-services", hasDropdown: true, dropdownItems: phdDropdownItems },
+  { label: "IT Services",  href: "/services",     hasDropdown: true, dropdownItems: itServicesDropdownItems },
+  { label: "Contact",      href: "/contact" },
+  { label: "Careers",      href: "/careers" },
 ];
 
 export default function Navbar() {
   const pathname = usePathname();
   const [menuOpen, setMenuOpen]       = useState(false);
-  const [dropdownOpen, setDropdownOpen] = useState(false);
-  const [mobilePhd, setMobilePhd]     = useState(false);
+  const [dropdownOpen, setDropdownOpen] = useState<string | null>(null);
+  const [mobileDropdown, setMobileDropdown] = useState<string | null>(null);
   const { setHovered } = useCursor();
   const dropdownTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
 
-  const handleDropdownEnter = () => {
+  const handleDropdownEnter = (label: string) => {
     if (dropdownTimer.current) clearTimeout(dropdownTimer.current);
-    setDropdownOpen(true);
+    setDropdownOpen(label);
   };
 
   const handleDropdownLeave = () => {
-    dropdownTimer.current = setTimeout(() => setDropdownOpen(false), 150);
+    dropdownTimer.current = setTimeout(() => setDropdownOpen(null), 150);
+  };
+
+  const toggleMobileDropdown = (label: string) => {
+    setMobileDropdown(mobileDropdown === label ? null : label);
   };
 
   return (
@@ -57,15 +70,16 @@ export default function Navbar() {
 
         {/* ── Desktop nav ── */}
         <ul className="hidden md:flex items-center gap-1 list-none m-0 p-0">
-          {navLinks.map(({ label, href, hasDropdown }) => {
-            const isActive = pathname === href || pathname.startsWith(href + "/") && href !== "/";
+          {navLinks.map(({ label, href, hasDropdown, dropdownItems }) => {
+            const isActive = pathname === href || (href !== "/" && pathname.startsWith(href));
+            const isDropdownOpen = dropdownOpen === label;
 
             if (hasDropdown) {
               return (
                 <li
                   key={href}
                   className="relative"
-                  onMouseEnter={() => { handleDropdownEnter(); setHovered(true); }}
+                  onMouseEnter={() => { handleDropdownEnter(label); setHovered(true); }}
                   onMouseLeave={() => { handleDropdownLeave(); setHovered(false); }}
                 >
                   <TransitionLink
@@ -84,16 +98,16 @@ export default function Navbar() {
                     <ChevronDown
                       size={12}
                       strokeWidth={2.5}
-                      className={`transition-transform duration-200 ${dropdownOpen ? "rotate-180" : ""}`}
+                      className={`transition-transform duration-200 ${isDropdownOpen ? "rotate-180" : ""}`}
                     />
                   </TransitionLink>
 
                   {/* Dropdown panel */}
                   <div
                     className={`
-                      absolute top-full left-0 mt-2 w-[220px] rounded-[14px] py-2 overflow-hidden
+                      absolute top-full left-0 mt-2 w-[240px] rounded-[14px] py-2 overflow-hidden
                       transition-all duration-200 origin-top
-                      ${dropdownOpen
+                      ${isDropdownOpen
                         ? "opacity-100 scale-y-100 pointer-events-auto translate-y-0"
                         : "opacity-0 scale-y-95 pointer-events-none -translate-y-1"
                       }
@@ -103,22 +117,48 @@ export default function Navbar() {
                       border: "1px solid rgba(0,0,0,0.08)",
                       boxShadow: "0 8px 32px rgba(0,0,0,0.10), 0 2px 8px rgba(0,0,0,0.06)",
                     }}
-                    onMouseEnter={handleDropdownEnter}
+                    onMouseEnter={() => handleDropdownEnter(label)}
                     onMouseLeave={handleDropdownLeave}
                   >
-                    {/* Top accent */}
-                    <div className="h-[2px] mx-3 mb-2 rounded-full bg-gradient-to-r from-blue-600 to-transparent" />
+                    {/* Top accent with dynamic color */}
+                    <div className={`h-[2px] mx-3 mb-2 rounded-full bg-gradient-to-r ${
+                      label === "PHD Services" 
+                        ? "from-blue-600 to-transparent" 
+                        : "from-emerald-600 to-transparent"
+                    }`} />
 
-                    {phdDropdownItems.map((item) => (
+                    {/* Category header */}
+                    <div className="px-4 py-1.5 mb-1">
+                      <span className="text-[0.55rem] font-bold tracking-[0.2em] uppercase text-black/30">
+                        {label === "PHD Services" ? "Academic Support" : "Technical Solutions"}
+                      </span>
+                    </div>
+
+                    {dropdownItems?.map((item) => (
                       <TransitionLink
                         key={item.label}
                         href={item.href}
                         className="flex items-center gap-2.5 px-4 py-2.5 text-[0.72rem] text-black/55 hover:text-blue-600 hover:bg-blue-50 transition-all duration-150 no-underline group"
                       >
-                        <span className="w-1 h-1 rounded-full bg-blue-600/30 group-hover:bg-blue-600 transition-colors duration-150 shrink-0" />
+                        <span className={`w-1 h-1 rounded-full ${
+                          label === "PHD Services" 
+                            ? "bg-blue-600/30 group-hover:bg-blue-600" 
+                            : "bg-emerald-600/30 group-hover:bg-emerald-600"
+                        } transition-colors duration-150 shrink-0`} />
                         {item.label}
                       </TransitionLink>
                     ))}
+
+                    {/* Footer link */}
+                    <div className="mx-3 mt-2 pt-2 border-t border-black/5">
+                      <TransitionLink
+                        href={href}
+                        className="flex items-center justify-between px-2 py-1.5 text-[0.65rem] text-black/40 hover:text-blue-600 transition-colors duration-150 no-underline"
+                      >
+                        <span>View all {label}</span>
+                        <span className="text-[0.55rem]">→</span>
+                      </TransitionLink>
+                    </div>
                   </div>
                 </li>
               );
@@ -177,8 +217,10 @@ export default function Navbar() {
         <div className="h-16 border-b border-black/5" />
 
         <ul className="flex flex-col flex-1 justify-center px-8 gap-2 list-none mt-12 m-0 p-0 overflow-y-auto">
-          {navLinks.map(({ label, href, hasDropdown }, i) => {
+          {navLinks.map(({ label, href, hasDropdown, dropdownItems }, i) => {
             const isActive = pathname === href;
+            const isMobileOpen = mobileDropdown === label;
+
             return (
               <li
                 key={href}
@@ -187,9 +229,9 @@ export default function Navbar() {
               >
                 {hasDropdown ? (
                   <div>
-                    {/* PHD Services accordion toggle */}
+                    {/* Accordion toggle */}
                     <button
-                      onClick={() => setMobilePhd(!mobilePhd)}
+                      onClick={() => toggleMobileDropdown(label)}
                       className={`
                         flex items-center justify-between w-full
                         py-5 border-b border-black/06
@@ -202,24 +244,53 @@ export default function Navbar() {
                       <ChevronDown
                         size={24}
                         strokeWidth={2}
-                        className={`transition-transform duration-300 ${mobilePhd ? "rotate-180 text-blue-600" : "text-black/30"}`}
+                        className={`transition-transform duration-300 ${
+                          isMobileOpen 
+                            ? "rotate-180 text-blue-600" 
+                            : "text-black/30"
+                        }`}
                       />
                     </button>
 
                     {/* Mobile dropdown items */}
-                    <div className={`overflow-hidden transition-all duration-400 ${mobilePhd ? "max-h-[500px] opacity-100" : "max-h-0 opacity-0"}`}>
+                    <div className={`overflow-hidden transition-all duration-400 ${
+                      isMobileOpen ? "max-h-[600px] opacity-100" : "max-h-0 opacity-0"
+                    }`}>
                       <div className="pl-4 py-2 flex flex-col gap-1 border-b border-black/06">
-                        {phdDropdownItems.map((item) => (
+                        {/* Category badge */}
+                        <div className="px-2 py-1.5 mb-1">
+                          <span className={`text-[0.6rem] font-bold tracking-[0.2em] uppercase ${
+                            label === "PHD Services" ? "text-blue-500/60" : "text-emerald-500/60"
+                          }`}>
+                            {label === "PHD Services" ? "ACADEMIC SUPPORT" : "TECHNICAL SOLUTIONS"}
+                          </span>
+                        </div>
+
+                        {dropdownItems?.map((item) => (
                           <Link
                             key={item.label}
                             href={item.href}
                             onClick={() => setMenuOpen(false)}
-                            className="flex items-center gap-2.5 py-2 text-[0.9rem] text-black/50 hover:text-blue-600 no-underline transition-colors duration-150"
+                            className="flex items-center gap-2.5 py-2.5 text-[0.85rem] text-black/50 hover:text-blue-600 no-underline transition-colors duration-150 group"
                           >
-                            <span className="w-1 h-1 rounded-full bg-blue-600/40 shrink-0" />
+                            <span className={`w-1.5 h-1.5 rounded-full ${
+                              label === "PHD Services" 
+                                ? "bg-blue-500/40 group-hover:bg-blue-500" 
+                                : "bg-emerald-500/40 group-hover:bg-emerald-500"
+                            } shrink-0 transition-colors duration-150`} />
                             {item.label}
                           </Link>
                         ))}
+
+                        {/* View all link */}
+                        <Link
+                          href={href}
+                          onClick={() => setMenuOpen(false)}
+                          className="flex items-center justify-between px-2 py-2 mt-1 text-[0.7rem] text-black/40 hover:text-blue-600 transition-colors duration-150 no-underline"
+                        >
+                          <span>View all {label}</span>
+                          <span className="text-[0.6rem]">→</span>
+                        </Link>
                       </div>
                     </div>
                   </div>

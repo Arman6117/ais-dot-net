@@ -65,16 +65,7 @@ export const serviceGroups = [
       accent: "#fb7185",
       mesh: "radial-gradient(ellipse at 30% 60%, #fb718528 0%, transparent 60%), radial-gradient(ellipse at 75% 20%, #e1183628 0%, transparent 50%)",
     },
-    // {
-    //   id: "04",
-    //   title: "Internships",
-    //   description: "Explore real-world experience through smart and hands-on training. Bridge the gap between classroom and career with live projects.",
-    //   icon: Briefcase,
-    //   floatingIcons: [Users, Cpu, Layers, Globe],
-    //   bg: "#431407",
-    //   accent: "#fb923c",
-    //   mesh: "radial-gradient(ellipse at 60% 40%, #fb923c28 0%, transparent 60%), radial-gradient(ellipse at 10% 70%, #ea580c28 0%, transparent 50%)",
-    // },
+ 
     {
       id: "04",
       title: "Workshops & Training",
