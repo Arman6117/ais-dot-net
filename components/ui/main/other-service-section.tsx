@@ -8,42 +8,28 @@ import {
 } from "@/components/ui/carousel";
 import { otherServices } from "@/data/services";
 import Autoplay from "embla-carousel-autoplay";
-
-import { useRef } from "react";
+import { useMemo } from "react";
 import ServiceSlide from "./service-slide";
 import Eyebrow from "@/components/eyebrow";
 
-
-
-// dot pattern as inline SVG data URI
-
-
-
 export default function OtherServicesSection() {
-  const plugin = useRef(Autoplay({ delay: 4000, stopOnInteraction: true }));
+  const plugin = useMemo(
+    () =>
+      Autoplay({
+        delay: 3000,
+        stopOnInteraction: false,
+        stopOnMouseEnter: false,
+      }),
+    []
+  );
 
   return (
     <section className="relative z-[1] px-5 sm:px-8 lg:px-[52px] py-24">
-      {/* Keyframes injected via style tag */}
-      <style>{`
-        @keyframes floatIcon {
-          0%, 100% { transform: translateY(0px) rotate(0deg); }
-          33%       { transform: translateY(-12px) rotate(3deg); }
-          66%       { transform: translateY(-6px) rotate(-2deg); }
-        }
-        @keyframes slideUp {
-          from { opacity: 0; transform: translateY(20px); }
-          to   { opacity: 1; transform: translateY(0); }
-        }
-      `}</style>
-
       {/* Header */}
       <div className="flex items-end justify-between mb-10">
         <div>
           <div className="flex items-center gap-[9px] mb-3">
-           <Eyebrow>
-           Beyond PhD
-           </Eyebrow>
+            <Eyebrow>Beyond PhD</Eyebrow>
           </div>
           <h2 className="text-[clamp(2.2rem,4vw,3.8rem)] font-extrabold leading-[1.05] tracking-[-0.03em] text-[#111]">
             IT Services
@@ -56,15 +42,16 @@ export default function OtherServicesSection() {
 
       {/* Carousel */}
       <Carousel
-        plugins={[plugin.current]}
-        opts={{ loop: true }}
-        className="w-full "
-        onMouseEnter={plugin.current.stop}
-        onMouseLeave={plugin.current.reset}
+        plugins={[plugin]}
+        opts={{
+          loop: true,
+          align: "start",
+        }}
+        className="w-full"
       >
-        <CarouselContent >
+        <CarouselContent className="ml-0">
           {otherServices.map((service) => (
-            <CarouselItem key={service.id} className="overflow-hidden rounded-[24px]">
+            <CarouselItem key={service.id} className="pl-0 rounded-[24px]">
               <ServiceSlide service={service} />
             </CarouselItem>
           ))}
