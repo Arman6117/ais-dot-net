@@ -7,6 +7,7 @@ import CursorProvider from "@/components/ui/cursor-provider";
 import { LoaderProvider } from "@/context/loader-context";
 import { TransitionProvider } from "@/context/transition-context";
 import SocialSidebar from "@/components/ui/social-sidebar";
+import EnquiryProvider from "@/components/provider/enquiry-provider";
 
 const dmSans = DM_Sans({
   variable: "--font-dm-sans",
@@ -26,6 +27,8 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={`p-6 ${dmSans.className} bg-[#FAF9F6]`}>
+        <EnquiryProvider>
+
         <TransitionProvider>
           <LoaderProvider>
             <CursorProvider>
@@ -36,6 +39,7 @@ export default function RootLayout({
             </CursorProvider>
           </LoaderProvider>
         </TransitionProvider>
+        </EnquiryProvider>
       
       </body>
     </html>

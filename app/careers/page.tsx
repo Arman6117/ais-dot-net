@@ -10,8 +10,8 @@ export default function CareersPage() {
     <main>
     
       <CareersHero />
-      <HowItWorks />
       <OpenInternships/>
+      <HowItWorks />
       <TermsSection />
       <TestimonialsSection />
         <Footer/>

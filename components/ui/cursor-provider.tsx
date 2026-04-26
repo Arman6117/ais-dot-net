@@ -68,7 +68,7 @@ export default function CursorProvider({
       {/* Triangle cursor */}
       <div
         ref={cursorTriangleRef}
-        className="fixed top-0 left-0 pointer-events-none z-[9999] transition-all duration-200"
+        className="fixed top-0 left-0 pointer-events-none z-[99999]  transition-all duration-200"
         style={{
           width: 0,
           height: 0,
@@ -84,7 +84,7 @@ export default function CursorProvider({
       {/* Square cursor */}
       <div
         ref={cursorSquareRef}
-        className="fixed top-0 left-0 pointer-events-none z-[9998] transition-all duration-300"
+        className="fixed top-0 left-0 pointer-events-none z-[99998]  transition-all duration-300"
         style={{
           width: "12px",
           height: "12px",
@@ -97,7 +97,7 @@ export default function CursorProvider({
       
       <div
         ref={cursorCrossRef}
-        className="fixed top-0 left-0 pointer-events-none z-[9997]"
+        className="fixed top-0 left-0 pointer-events-none z-[99997] "
         style={{
           width: "24px",
           height: "24px",
