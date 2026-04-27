@@ -26,7 +26,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={`p-6 ${dmSans.className} bg-[#FAF9F6]`}>
+      <body className={` ${dmSans.className} bg-[#FAF9F6]`}>
         <EnquiryProvider>
 
         <TransitionProvider>

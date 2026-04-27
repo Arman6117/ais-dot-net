@@ -85,7 +85,7 @@ export default function SocialSidebar() {
   return (
     <div
       ref={containerRef}
-      className="fixed left-5 top-1/2 -translate-y-1/2 z-50 hidden lg:flex flex-col items-center gap-2"
+      className="fixed right-5 top-1/2 -translate-y-1/2 z-50 hidden lg:flex flex-col items-center gap-2"
       onMouseEnter={() => { cancelClose(); open(); }}
       onMouseLeave={close}
     >

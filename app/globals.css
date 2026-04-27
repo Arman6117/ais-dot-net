@@ -128,9 +128,9 @@
   }
 }
 
-*{
+/* *{
   cursor: none !important;
-}
+} */
 html {
   -webkit-font-smoothing: antialiased;
 }

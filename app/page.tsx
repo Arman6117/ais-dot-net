@@ -6,6 +6,7 @@ import Hero from "@/components/ui/main/hero";
 import JourneyTimeline from "@/components/ui/main/journey-timeline";
 import MissionVision from "@/components/ui/main/mission-vision";
 import OtherServicesSection from "@/components/ui/main/other-service-section";
+import ServiceCountries from "@/components/ui/main/service-countries";
 import ServicesSection from "@/components/ui/main/service-section";
 import ServiceCategories from "@/components/ui/main/services-category";
 import StatsSection from "@/components/ui/main/stats-section";
@@ -17,6 +18,7 @@ export default function Home() {
     <main className="">
       
       <Hero />
+      <ServiceCountries/>
       <JourneyTimeline/>
       <ServiceCategories/>
       <AboutSection />
