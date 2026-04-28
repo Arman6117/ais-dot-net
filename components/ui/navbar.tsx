@@ -76,7 +76,7 @@ export default function Navbar() {
           transition-all duration-500 ease-out
           ${scrolled
             ? "bg-white/98 backdrop-blur-xl border-b border-gray-100 shadow-lg"
-            : "bg-gradient-to-r from-[#0A1628]/90 to-[#0D1B3E]/90 backdrop-blur-md border-b border-white/10"
+            : "bg-gradient-to-r from-[#010309] to-[#0D1B3E] backdrop-blur-md border-b border-white/10"
           }
         `}
         style={{ height: "72px" }}
