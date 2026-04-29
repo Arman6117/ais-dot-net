@@ -125,18 +125,10 @@ const ServiceCountries = () => {
             ref={titleRef}
             className="text-3xl md:text-4xl lg:text-5xl font-bold mb-6 text-[#0a0f2c] leading-tight opacity-0"
           >
-            Trusted by Scholars<br className="hidden sm:block" />
-            Across the World
+            Service Availability
           </h2>
 
-          {/* Description - lighter weight, secondary color */}
-          <p
-            ref={descriptionRef}
-            className="text-gray-500 text-base md:text-lg max-w-2xl mx-auto leading-relaxed opacity-0"
-          >
-            From first draft to final publication — we're with you at every stage 
-            with expert guidance and unwavering support, wherever you are in the world.
-          </p>
+        
         </div>
 
         {/* Countries Grid - clean card design matching image style */}
