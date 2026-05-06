@@ -101,7 +101,7 @@ const ServiceCountries = () => {
         sectionRef.current = node;
         inViewRef(node);
       }}
-      className="relative py-20 md:py-28 px-6 lg:px-12 overflow-hidden"
+      className="relative py-20 md:py-8 px-6 lg:px-12 overflow-hidden"
     >
       {/* Clean white background */}
       <div className="absolute inset-0 bg-white" />

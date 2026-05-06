@@ -23,7 +23,7 @@ export default function Home() {
       <ServiceCategories/>
       <AboutSection />
       <ServicesSection />
-      <OtherServicesSection />
+      {/* <OtherServicesSection /> */}
   <WhyChooseUs/>
       <StatsSection />
     

@@ -13,7 +13,6 @@ const TheCard = () => {
   const cardRef = useRef<HTMLDivElement>(null);
   const founderRef = useRef<HTMLDivElement>(null);
   const glowRef = useRef<HTMLDivElement>(null);
-  const pulseRingRef = useRef<HTMLDivElement>(null);
   const { setHovered } = useCursor();
 
   // Entrance animation after loader
@@ -32,23 +31,6 @@ const TheCard = () => {
         }
       );
     }
-  }, [loaderDone]);
-
-  // Entrance animation for pulse ring - only once
-  useEffect(() => {
-    if (!loaderDone || !pulseRingRef.current) return;
-    
-    // Animate the ring scale and opacity just once on entrance
-    gsap.fromTo(pulseRingRef.current,
-      { scale: 1.5, opacity: 0 },
-      {
-        scale: 1,
-        opacity: 1,
-        duration: 0.8,
-        ease: "back.out(0.5)",
-        delay: 0.5,
-      }
-    );
   }, [loaderDone]);
 
   // 3D tilt effect on hover
@@ -81,7 +63,7 @@ const TheCard = () => {
         const glowY = (e.clientY - rect.top) / rect.height;
         gsap.to(glowRef.current, {
           opacity: 0.3,
-          background: `radial-gradient(circle at ${glowX * 100}% ${glowY * 100}%, rgba(139,92,246,0.3), rgba(59,130,246,0.1))`,
+          background: `radial-gradient(circle at ${glowX * 100}% ${glowY * 100}%, rgba(255,255,255,0.15), rgba(255,255,255,0.05))`,
           duration: 0.3,
         });
       }
@@ -119,13 +101,6 @@ const TheCard = () => {
       id="the-card"
       className="relative w-[300px] h-[380px] mx-auto lg:mx-0"
     >
-      {/* Static ring border - no animation after entrance */}
-      <div 
-        ref={pulseRingRef}
-        className="absolute -inset-[6px] rounded-[26px] bg-gradient-to-r from-blue-500/30 via-purple-500/40 to-pink-500/30"
-        style={{ opacity: 0 }}
-      />
-
       {/* Main card */}
       <div
         ref={founderRef}
@@ -136,10 +111,10 @@ const TheCard = () => {
         <div 
           ref={glowRef}
           className="absolute inset-0 opacity-0 transition-opacity duration-300 pointer-events-none z-10"
-          style={{ background: "radial-gradient(circle at 50% 50%, rgba(139,92,246,0.3), rgba(59,130,246,0.1))" }}
+          style={{ background: "radial-gradient(circle at 50% 50%, rgba(255,255,255,0.15), rgba(255,255,255,0.05))" }}
         />
 
-        {/* Image with subtle blue-purple tint overlay */}
+        {/* Image with subtle overlay */}
         <div className="relative w-full h-full">
           <Image
             src="/founder.jpeg"
@@ -157,57 +132,52 @@ const TheCard = () => {
 
         {/* Content overlay */}
         <div className="absolute bottom-0 left-0 right-0 p-6 z-20">
-          <div className="text-xl font-bold bg-gradient-to-r from-white via-blue-100 to-purple-100 bg-clip-text text-transparent">
+          <div className="text-xl font-bold text-white">
             Dr. Prajyot Patil
           </div>
-          <div className="text-xs opacity-80 tracking-wide mt-1 text-blue-200/80">
+          <div className="text-xs text-white/70 tracking-wide mt-1">
             Data Scientist | PhD in AI | MSc Statistics
           </div>
           <div className="flex justify-between items-center w-full mt-3">
             <div className="flex items-center gap-2">
-              <div className="w-8 h-px bg-gradient-to-r from-blue-400 to-purple-400" />
-              <span className="text-[0.65rem] font-medium tracking-wider uppercase bg-gradient-to-r from-blue-300 to-purple-300 bg-clip-text text-transparent">
+              <div className="w-8 h-px bg-white/30" />
+              <span className="text-[0.65rem] font-medium tracking-wider uppercase text-white/60">
                 Founder & Director
               </span>
             </div>
 
-            {/* LinkedIn Button with hover effects */}
-            <div className="relative">
-              <div className="absolute inset-0 rounded-full bg-gradient-to-r from-blue-500 to-purple-500 opacity-0 group-hover:opacity-100 transition-opacity duration-300 blur-sm" />
-              <div 
-                className="relative size-7 rounded-full bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-500 hover:to-purple-500 transition-all duration-300 flex items-center justify-center cursor-pointer shadow-lg"
-                onMouseEnter={() => setHovered(true)}
-                onMouseLeave={() => setHovered(false)}
+            {/* LinkedIn Button */}
+            <div 
+              className="relative size-7 rounded-full bg-white/10 hover:bg-white/20 transition-all duration-300 flex items-center justify-center cursor-pointer"
+              onMouseEnter={() => setHovered(true)}
+              onMouseLeave={() => setHovered(false)}
+            >
+              <Link
+                href={"https://www.linkedin.com/in/dr-prajyot-s-patil-73a99a112/"}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex items-center justify-center w-full h-full"
               >
-                <Link
-                  href={"https://www.linkedin.com/in/dr-prajyot-s-patil-73a99a112/"}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="flex items-center justify-center w-full h-full"
-                >
-                  <FaLinkedinIn className="size-3.5 text-white transition-all duration-300" />
-                </Link>
-              </div>
+                <FaLinkedinIn className="size-3.5 text-white transition-all duration-300" />
+              </Link>
             </div>
           </div>
         </div>
 
-        {/* Founder badge with gradient */}
+        {/* Founder badge */}
         <div className="absolute top-4 right-4 z-20">
-          <div className="bg-gradient-to-r from-blue-500/20 to-purple-500/20 backdrop-blur-sm border border-blue-400/30 text-white rounded-lg px-3 py-1 text-[0.65rem] font-bold tracking-wider uppercase shadow-lg">
-            <span className="bg-gradient-to-r from-blue-300 to-purple-300 bg-clip-text text-transparent">
-              Founder
-            </span>
+          <div className="bg-white/10 backdrop-blur-sm border border-white/10 text-white rounded-lg px-3 py-1 text-[0.65rem] font-bold tracking-wider uppercase">
+            Founder
           </div>
         </div>
 
-        {/* Decorative corner elements matching orbit theme */}
-        <div className="absolute top-0 left-0 w-20 h-20 bg-gradient-to-br from-blue-500/20 to-transparent rounded-bl-[20px] z-10" />
-        <div className="absolute bottom-0 right-0 w-20 h-20 bg-gradient-to-tl from-purple-500/15 to-transparent rounded-tl-[20px] z-10" />
+        {/* Subtle corner accents */}
+        <div className="absolute top-0 left-0 w-20 h-20 bg-white/[0.03] rounded-bl-[20px] z-10" />
+        <div className="absolute bottom-0 right-0 w-20 h-20 bg-white/[0.02] rounded-tl-[20px] z-10" />
         
-        {/* Orbital ring accent - static, no animation */}
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[90%] h-[90%] rounded-full border border-blue-400/10 pointer-events-none z-10" />
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[110%] h-[110%] rounded-full border border-purple-400/5 pointer-events-none z-10" />
+        {/* Subtle ring accents */}
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[90%] h-[90%] rounded-full border border-white/5 pointer-events-none z-10" />
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[110%] h-[110%] rounded-full border border-white/[0.03] pointer-events-none z-10" />
       </div>
     </div>
   );
