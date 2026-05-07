@@ -20,9 +20,10 @@ const instrumentSerif = Instrument_Serif({
 const dotPattern = (color: string) =>
   `url("data:image/svg+xml,%3Csvg width='20' height='20' viewBox='0 0 20 20' xmlns='http://www.w3.org/2000/svg'%3E%3Ccircle cx='1' cy='1' r='1' fill='${encodeURIComponent(color)}'/%3E%3C/svg%3E")`;
 
-// --- DATA ---
+// --- DATA WITH IDS ---
 const services = [
   {
+    id: "thesis-writing",
     num: "01",
     title: "Thesis Writing",
     icon: GraduationCap,
@@ -35,6 +36,7 @@ const services = [
     floatingIcons: [GraduationCap, FileText, BookOpen],
   },
   {
+    id: "dissertation-writing",
     num: "02",
     title: "Dissertation Writing",
     icon: BookOpen,
@@ -47,6 +49,7 @@ const services = [
     floatingIcons: [BookOpen, Search, Globe],
   },
   {
+    id: "research-paper-writing",
     num: "03",
     title: "Research Paper Writing",
     icon: FileText,
@@ -59,6 +62,7 @@ const services = [
     floatingIcons: [FileText, BookMarked, Globe],
   },
   {
+    id: "article-writing",
     num: "04",
     title: "Article Writing",
     icon: Newspaper,
@@ -71,6 +75,7 @@ const services = [
     floatingIcons: [Newspaper, FileText, Globe],
   },
   {
+    id: "biography-writing",
     num: "05",
     title: "Biography Writing",
     icon: User,
@@ -83,6 +88,7 @@ const services = [
     floatingIcons: [User, Briefcase, BookOpen],
   },
   {
+    id: "business-proposal-writing",
     num: "06",
     title: "Business Proposal Writing",
     icon: Briefcase,
@@ -95,6 +101,7 @@ const services = [
     floatingIcons: [Briefcase, FileText, Search],
   },
   {
+    id: "case-study-writing",
     num: "07",
     title: "Case Study Writing",
     icon: Search,
@@ -107,6 +114,7 @@ const services = [
     floatingIcons: [Search, FileText, BookOpen],
   },
   {
+    id: "book-publication",
     num: "08",
     title: "Book Publication",
     icon: BookMarked,
@@ -119,6 +127,7 @@ const services = [
     floatingIcons: [BookMarked, Globe, GraduationCap],
   },
   {
+    id: "journal-publication",
     num: "09",
     title: "Journal Publication",
     icon: Globe,
@@ -138,14 +147,60 @@ export default function PhdJourney() {
   const [contentKey, setContentKey] = useState(0);
   const [direction, setDirection] = useState<"next" | "prev">("next");
   const contentRef = useRef<HTMLDivElement>(null);
+  const sectionRef = useRef<HTMLDivElement>(null);
   const autoRef = useRef<NodeJS.Timeout | null>(null);
   const INTERVAL = 5000;
+
+  // Parse hash from URL and set initial slide
+  useEffect(() => {
+    const hash = window.location.hash.replace("#", "");
+    if (hash) {
+      const index = services.findIndex((s) => s.id === hash);
+      if (index !== -1 && index !== current) {
+        setCurrent(index);
+        setContentKey((k) => k + 1);
+      }
+    }
+    
+    // Scroll to section if hash is present
+    if (hash && sectionRef.current) {
+      setTimeout(() => {
+        sectionRef.current?.scrollIntoView({ behavior: "smooth", block: "center" });
+      }, 300);
+    }
+  }, []);
+
+  // Listen for hash changes
+  useEffect(() => {
+    const handleHashChange = () => {
+      const hash = window.location.hash.replace("#", "");
+      if (hash) {
+        const index = services.findIndex((s) => s.id === hash);
+        if (index !== -1 && index !== current) {
+          setDirection(index > current ? "next" : "prev");
+          setCurrent(index);
+          setContentKey((k) => k + 1);
+          
+          setTimeout(() => {
+            sectionRef.current?.scrollIntoView({ behavior: "smooth", block: "center" });
+          }, 200);
+        }
+      }
+    };
+
+    window.addEventListener("hashchange", handleHashChange);
+    return () => window.removeEventListener("hashchange", handleHashChange);
+  }, [current]);
 
   // Manual & Auto Slide Logic
   const go = useCallback((idx: number, dir: "next" | "prev") => {
     setDirection(dir);
     setCurrent(idx);
     setContentKey((k) => k + 1);
+    
+    // Update URL hash without scrolling
+    const serviceId = services[idx].id;
+    window.history.replaceState(null, "", `#${serviceId}`);
   }, []);
 
   const next = useCallback(() => go((current + 1) % services.length, "next"), [current, go]);
@@ -176,7 +231,7 @@ export default function PhdJourney() {
   const Icon = service.icon;
 
   return (
-    <div className={`${instrumentSerif.variable} w-full px-4 sm:px-8 lg:px-14 py-16 font-sans`}>
+    <div ref={sectionRef} className={`${instrumentSerif.variable} w-full px-4 sm:px-8 lg:px-14 py-16 font-sans`} id="phd-journey">
       <style>{`
         @keyframes floatIcon {
           0%, 100% { transform: translateY(0px) rotate(0deg); }
@@ -191,7 +246,7 @@ export default function PhdJourney() {
       {/* Header section */}
       <div className="flex items-end justify-between mb-10">
         <div>
-          <p className="text-[0.6rem] font-bold tracking-[0.25em] uppercase text-black/30 mb-3">Our Services</p>
+          <p className="text-[0.6rem] font-bold tracking-[0.25em] uppercase text-blue-600 mb-3">Our Services</p>
           <h2 className="font-[family-name:var(--font-serif)] italic text-[clamp(2rem,4vw,3.2rem)] text-black leading-none tracking-tight">
             PhD Journey Support
           </h2>
