@@ -1,4 +1,5 @@
 import AboutCTA from "@/components/ui/about/about-cta";
+import TestimonialsSection from "@/components/ui/about/testimonials-section";
 import Footer from "@/components/ui/footer";
 import StatsSection from "@/components/ui/main/stats-section";
 import ServicesGrid from "@/components/ui/services/services-grid";
@@ -12,6 +13,7 @@ export default function ServicesPage() {
       <ServicesHero />
       <ServicesGrid />
       <StatsSection />
+      {/* <TestimonialsSection/> */}
       <AboutCTA />
       <Footer />
     </main>

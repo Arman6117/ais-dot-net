@@ -1,237 +1,252 @@
+// components/contact/contact-info.tsx
 "use client";
-import { useEffect, useRef } from "react";
-import gsap from "gsap";
-import { ScrollTrigger } from "gsap/ScrollTrigger";
-import { Phone, Mail, MapPin, Clock } from "lucide-react";
 
-const contactItems = [
+import { useState } from "react";
+import { Phone, Mail, MapPin, Clock, ArrowRight, Star, Send, CheckCircle2, Sparkles } from "lucide-react";
+
+const INFO = [
   {
     icon: Phone,
-    label: "Phone",
-    value: "+91 99757 07273",
-    sub: "Mon–Sat, 9am–7pm IST",
-    href: "tel:+91 99757 07273",
-    accent: "#1A56DB",
+    label: "Call Us",
+    primary: "+91 99757 07273",
+    secondary: "Mon–Fri, 9am–7pm IST",
+    href: "tel:+919975707273",
+    color: "#3B82F6",
   },
   {
     icon: Mail,
-    label: "Email",
-    value: "info@aissolutions.net",
-    sub: "We reply within 24 hours",
+    label: "Email Us",
+    primary: "info@aissolutions.net",
+    secondary: "We reply within 24 hours",
     href: "mailto:info@aissolutions.net",
-    accent: "#4ade80",
+    color: "#10B981",
   },
   {
     icon: MapPin,
-    label: "Office Address",
-    value: "Office No 2, 1st Floor, Anand Sagar Building,",
-    sub: "Sinhgad Rd, near Naturals, above Bata Store, Mahalakshmi Society, Varshanand Society, Anand Nagar, Pune, Maharashtra 411051",
-    href: "https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d3784.151402223312!2d73.8235!3d18.4768!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3bc2bf2aba0ce6e5%3A0xd56c149411578bac!2sAIS%20Solutions%20Pvt.%20Ltd.%20%7C%20Ph.D%20Services%20%7C%20Thesis%20%7C%20Statistics%20%7C%20Data%20Analysis%20%7C%20Training!5e0!3m2!1sen!2sin!4v1774533631672!5m2!1sen!2sin",
-    accent: "#fb923c",
+    label: "Visit Us",
+    primary: "Anand Sagar Building, Pune",
+    secondary: "Sinhgad Rd, Maharashtra 411051",
+    href: "https://maps.google.com/?q=AIS+Solutions+Pune",
+    color: "#F59E0B",
   },
   {
     icon: Clock,
     label: "Working Hours",
-    value: "Mon – Friday",
-    sub: "9:00 AM – 7:00 PM IST",
+    primary: "Mon – Friday",
+    secondary: "9:00 AM – 7:00 PM IST",
     href: null,
-    accent: "#a78bfa",
+    color: "#8B5CF6",
   },
 ];
 
+const SERVICES = [
+  "Thesis Writing", "Dissertation Writing", "Research Paper",
+  "Journal Publication", "Book Publication", "Data Analytics",
+  "IT Services", "Other",
+];
+
 export default function ContactInfo() {
-  const sectionRef = useRef<HTMLElement>(null);
+  const [submitted, setSubmitted] = useState(false);
+  const [focused, setFocused] = useState<string | null>(null);
+  const [form, setForm] = useState({
+    name: "", email: "", phone: "", service: "", message: "",
+  });
 
-  useEffect(() => {
-    gsap.registerPlugin(ScrollTrigger);
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    setSubmitted(true);
+  };
 
-    const cards = sectionRef.current?.querySelectorAll(".contact-card");
-    if (!cards) return;
-
-    gsap.fromTo(
-      cards,
-      { opacity: 0, y: 40 },
-      {
-        opacity: 1,
-        y: 0,
-        duration: 0.7,
-        ease: "power3.out",
-        stagger: 0.1,
-        scrollTrigger: {
-          id: "contact-cards-trigger",
-          trigger: sectionRef.current,
-          start: "top 80%",
-        },
-      }
-    );
-
-    return () => ScrollTrigger.getById("contact-cards-trigger")?.kill();
-  }, []);
+  const inputClasses = (name: string) => `
+    w-full px-4 py-3.5 rounded-xl text-[13.5px] text-white placeholder:text-white/20 outline-none
+    transition-all duration-300 font-medium border
+    ${focused === name 
+      ? "bg-[#1A56DB]/10 border-[#1A56DB]/50" 
+      : "bg-white/[0.03] border-white/[0.06] hover:border-white/[0.12]"
+    }
+  `;
 
   return (
-    <section
-      ref={sectionRef}
-      className="relative z-[1] px-5 sm:px-8 lg:px-[52px] py-24"
-    >
-      {/* Header */}
-      <div className="flex items-center gap-[9px] mb-4">
-        <div className="w-[22px] h-[1.5px] bg-[#1A56DB]" />
-        <span className="text-[0.6rem] font-bold tracking-[0.24em] uppercase text-[#1A56DB]">
-          Contact Details
-        </span>
-      </div>
-      <h2 className="text-[clamp(2rem,4vw,3.2rem)] font-extrabold leading-[1.05] tracking-[-0.03em] text-[#111] mb-14">
-        Find us here
-      </h2>
-
-      {/* Two column layout — cards left, map right */}
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 items-start">
-        {/* ── Left: Contact cards ── */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
-          {contactItems.map(
-            ({ icon: Icon, label, value, sub, href, accent }) => {
-              const inner = (
-                <div
-                  className="contact-card opacity-0 group relative rounded-[20px] p-7 flex flex-col gap-4 overflow-hidden transition-shadow duration-300 hover:shadow-lg"
-                  style={{
-                    background: "#ffffff",
-                    border: "1px solid rgba(0,0,0,0.07)",
-                    boxShadow: "0 2px 16px rgba(0,0,0,0.05)",
-                  }}
-                >
-                  {/* Hover glow */}
-                  <div
-                    className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 rounded-[20px]"
-                    style={{
-                      background: `radial-gradient(ellipse at 50% 100%, ${accent}10 0%, transparent 70%)`,
-                    }}
-                  />
-
-                  {/* Top accent line */}
-                  <div
-                    className="absolute top-0 left-0 right-0 h-[2px] rounded-t-[20px] scale-x-0 group-hover:scale-x-100 transition-transform duration-500 origin-left"
-                    style={{
-                      background: `linear-gradient(90deg, ${accent}, transparent)`,
-                    }}
-                  />
-
-                  {/* Icon */}
-                  <div
-                    className="w-11 h-11 rounded-[12px] flex items-center justify-center shrink-0"
-                    style={{
-                      background: `${accent}12`,
-                      border: `1px solid ${accent}25`,
-                    }}
-                  >
-                    <Icon
-                      size={20}
-                      strokeWidth={1.5}
-                      style={{ color: accent }}
-                    />
-                  </div>
-
-                  {/* Text */}
-                  <div className="flex flex-col gap-1">
-                    <div className="text-[0.6rem] font-bold tracking-[0.2em] uppercase text-black/30">
-                      {label}
-                    </div>
-                    <div className="text-[0.92rem] font-bold text-[#111] leading-[1.4]">
-                      {value}
-                    </div>
-                    <div className="text-[0.75rem] text-black/45 leading-[1.6]">
-                      {sub}
-                    </div>
-                  </div>
-
-                  {/* Arrow for linked cards */}
-                  {href && (
-                    <div
-                      className="text-[0.68rem] font-bold tracking-[0.08em] uppercase flex items-center gap-1.5 transition-all duration-200 group-hover:gap-2.5"
-                      style={{ color: accent }}
-                    >
-                      <span>
-                        {label === "Office Address"
-                          ? "Get Directions"
-                          : "Contact"}
-                      </span>
-                      <span>→</span>
-                    </div>
-                  )}
+    <div className="grid grid-cols-1 lg:grid-cols-[1fr_1.4fr] gap-8 lg:gap-10 items-start">
+      
+      {/* LEFT - Contact cards */}
+      <div className="space-y-3.5">
+        {INFO.map(({ icon: Icon, label, primary, secondary, href, color }) => {
+          const Card = href ? 'a' : 'div';
+          return (
+            <Card
+              key={label}
+              {...(href ? { href, target: "_blank", rel: "noopener noreferrer" } : {})}
+              className="group relative flex items-start gap-4 p-5 rounded-2xl transition-all duration-300 hover:translate-x-1.5 block"
+              style={{
+                background: "rgba(255,255,255,0.025)",
+                border: "1px solid rgba(255,255,255,0.06)",
+                backdropFilter: "blur(20px)",
+              }}
+            >
+              <div className="absolute left-0 top-3 bottom-3 w-[3px] rounded-full scale-y-0 group-hover:scale-y-100 transition-transform duration-300 origin-center"
+                style={{ background: color }} />
+              
+              <div className="relative w-12 h-12 rounded-2xl flex items-center justify-center shrink-0 transition-all duration-300 group-hover:scale-105"
+                style={{ background: `${color}14`, border: `1px solid ${color}25` }}>
+                <Icon size={20} strokeWidth={1.5} style={{ color }} />
+              </div>
+              
+              <div className="flex-1 min-w-0">
+                <div className="text-[9.5px] font-bold tracking-[0.2em] uppercase mb-1" style={{ color: `${color}90` }}>
+                  {label}
                 </div>
-              );
+                <div className="text-[14.5px] font-semibold text-white/85 leading-snug">
+                  {primary}
+                </div>
+                <div className="text-[11.5px] text-white/30 mt-1 leading-relaxed">
+                  {secondary}
+                </div>
+              </div>
+              
+              {href && (
+                <ArrowRight size={15} className="text-white/15 group-hover:text-white/50 group-hover:translate-x-1 transition-all duration-300 mt-1.5 shrink-0" />
+              )}
+            </Card>
+          );
+        })}
 
-              return href ? (
-                <a
-                  key={label}
-                  href={href}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="block"
-                >
-                  {inner}
-                </a>
-              ) : (
-                <div key={label}>{inner}</div>
-              );
-            }
-          )}
-        </div>
-
-        {/* ── Right: Google Maps embed ── */}
-        <div
-          className="contact-card opacity-0 rounded-[20px] overflow-hidden h-[420px] lg:h-full min-h-[420px]"
-          style={{
-            border: "1px solid rgba(0,0,0,0.07)",
-            boxShadow: "0 2px 16px rgba(0,0,0,0.05)",
-          }}
-        >
-          <iframe
-            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3784.1502369829177!2d73.8235377!3d18.4768528!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3bc2bf2aba0ce6e5%3A0xd56c149411578bac!2sAIS%20Solutions%20Pvt.%20Ltd.%20%7C%20Ph.D%20Services%20%7C%20Thesis%20%7C%20Statistics%20%7C%20Data%20Analysis%20%7C%20Training!5e0!3m2!1sen!2sin!4v1773498802674!5m2!1sen!2sin"
-            width="100%"
-            height="100%"
-            style={{ border: 0, filter: "grayscale(20%) contrast(1.05)" }}
-            allowFullScreen
-            loading="lazy"
-            referrerPolicy="no-referrer-when-downgrade"
-            title="AIS Solutions Office Location"
-          />
+        {/* Rating badge */}
+        <div className="flex items-center gap-4 px-5 py-4 rounded-2xl mt-1"
+          style={{ background: "rgba(251,191,36,0.05)", border: "1px solid rgba(251,191,36,0.12)" }}>
+          <div className="flex gap-0.5">
+            {[...Array(5)].map((_, i) => (
+              <Star key={i} size={14} fill="#FBBF24" color="#FBBF24" strokeWidth={0} />
+            ))}
+          </div>
+          <div>
+            <span className="text-[13px] font-bold text-white/75">4.9</span>
+            <span className="text-[11.5px] text-white/30 ml-1.5">• 650+ Google reviews</span>
+          </div>
         </div>
       </div>
 
-      {/* Bottom strip — quick reach out */}
+      {/* RIGHT - Form */}
       <div
-        className="mt-8 rounded-[20px] p-8 flex flex-col sm:flex-row items-center justify-between gap-6"
+        className="relative rounded-3xl overflow-hidden"
         style={{
-          background: "#0a0a18",
-          border: "1px solid rgba(26,86,219,0.15)",
+          background: "linear-gradient(155deg, rgba(255,255,255,0.05) 0%, rgba(255,255,255,0.015) 100%)",
+          border: "1px solid rgba(255,255,255,0.08)",
+          backdropFilter: "blur(40px)",
+          boxShadow: "0 8px 80px rgba(59,130,246,0.1), inset 0 1px 0 rgba(255,255,255,0.06)",
         }}
       >
-        <div>
-          <div className="text-white font-bold text-[1rem] mb-1">
-            Ready to get started?
+        <div className="h-[2px] w-full bg-gradient-to-r from-blue-500 via-violet-500 to-blue-500" />
+
+        {!submitted ? (
+          <form onSubmit={handleSubmit} className="p-7 sm:p-10 flex flex-col gap-5">
+            <div className="flex items-center gap-3 mb-1">
+              <Sparkles size={14} className="text-blue-400" />
+              <span className="text-[9.5px] font-bold tracking-[0.35em] uppercase text-blue-400/70">
+                Send a Message
+              </span>
+            </div>
+            <h3 className="font-[family-name:var(--font-serif)] text-white text-[2rem] leading-tight mb-2">
+              How can we help?
+            </h3>
+
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+              {[
+                { key: "name", label: "Full Name", type: "text", placeholder: "Dr. Rohan Mehta" },
+                { key: "email", label: "Email Address", type: "email", placeholder: "you@university.edu" },
+              ].map(({ key, label, type, placeholder }) => (
+                <div key={key} className="flex flex-col gap-1.5">
+                  <label className="text-[9.5px] font-bold tracking-[0.18em] uppercase text-white/30">{label}</label>
+                  <input
+                    type={type} required placeholder={placeholder}
+                    value={form[key as keyof typeof form]}
+                    onChange={e => setForm(p => ({ ...p, [key]: e.target.value }))}
+                    onFocus={() => setFocused(key)} onBlur={() => setFocused(null)}
+                    className={inputClasses(key)}
+                  />
+                </div>
+              ))}
+            </div>
+
+            <div className="flex flex-col gap-1.5">
+              <label className="text-[9.5px] font-bold tracking-[0.18em] uppercase text-white/30">Phone Number</label>
+              <input
+                type="tel" placeholder="+91 98765 43210"
+                value={form.phone}
+                onChange={e => setForm(p => ({ ...p, phone: e.target.value }))}
+                onFocus={() => setFocused("phone")} onBlur={() => setFocused(null)}
+                className={inputClasses("phone")}
+              />
+            </div>
+
+            <div className="flex flex-col gap-2">
+              <label className="text-[9.5px] font-bold tracking-[0.18em] uppercase text-white/30">Service Needed</label>
+              <div className="flex flex-wrap gap-2">
+                {SERVICES.map(s => (
+                  <button
+                    key={s} type="button"
+                    onClick={() => setForm(p => ({ ...p, service: s }))}
+                    className={`px-3.5 py-2 rounded-full text-[11px] font-semibold transition-all duration-200 ${
+                      form.service === s 
+                        ? "bg-blue-500/20 border-blue-400/40 text-blue-300" 
+                        : "bg-white/[0.03] border-white/[0.06] text-white/35 hover:text-white/60 hover:border-white/[0.12]"
+                    } border`}
+                  >
+                    {s}
+                  </button>
+                ))}
+              </div>
+            </div>
+
+            <div className="flex flex-col gap-1.5">
+              <label className="text-[9.5px] font-bold tracking-[0.18em] uppercase text-white/30">Your Message</label>
+              <textarea
+                rows={4} required
+                placeholder="Tell us about your research project or requirements..."
+                value={form.message}
+                onChange={e => setForm(p => ({ ...p, message: e.target.value }))}
+                onFocus={() => setFocused("message")} onBlur={() => setFocused(null)}
+                className={`${inputClasses("message")} resize-none`}
+              />
+            </div>
+
+            <button
+              type="submit"
+              className="group flex items-center justify-center gap-3 w-full py-4 rounded-2xl text-[12px] font-bold tracking-[0.2em] uppercase text-white transition-all duration-300 hover:scale-[1.01] active:scale-[0.99] mt-1"
+              style={{
+                background: "linear-gradient(135deg, #3B82F6 0%, #6366F1 100%)",
+                boxShadow: "0 4px 32px rgba(59,130,246,0.3)",
+              }}
+            >
+              <Send size={15} className="transition-transform duration-300 group-hover:translate-x-1.5" />
+              Send Message
+            </button>
+
+            <p className="text-center text-[11px] text-white/20">
+              We respond within 24 hours · No spam, ever
+            </p>
+          </form>
+        ) : (
+          <div className="p-12 sm:p-16 flex flex-col items-center justify-center text-center gap-6 min-h-[500px]">
+            <div className="w-20 h-20 rounded-full flex items-center justify-center"
+              style={{ background: "rgba(16,185,129,0.12)", border: "1px solid rgba(16,185,129,0.25)" }}>
+              <CheckCircle2 size={36} className="text-emerald-400" />
+            </div>
+            <div>
+              <h3 className="font-[family-name:var(--font-serif)] text-white text-3xl mb-3">Message Received!</h3>
+              <p className="text-white/40 text-[14px] leading-relaxed max-w-xs">
+                Thank you for reaching out. Our team will get back to you within 24 hours.
+              </p>
+            </div>
+            <button 
+              onClick={() => { setSubmitted(false); setForm({ name:"", email:"", phone:"", service:"", message:"" }); }}
+              className="text-[11px] font-bold tracking-[0.2em] uppercase text-white/25 hover:text-white/60 transition-colors duration-300 mt-2"
+            >
+              Send another message
+            </button>
           </div>
-          <div className="text-white/40 text-[0.82rem]">
-            Call or email us directly — no forms, no waiting.
-          </div>
-        </div>
-        <div className="flex flex-wrap gap-3">
-          <a
-            href="tel:+919975707273"
-            className="inline-flex items-center gap-2 px-5 py-2.5 rounded-[8px] text-[0.75rem] font-bold text-white transition-all duration-200 hover:opacity-80"
-            style={{ background: "#1A56DB" }}
-          >
-            <Phone size={14} strokeWidth={2} />
-            Call Now
-          </a>
-          <a
-            href="mailto:info@aissolutions.net"
-            className="inline-flex items-center gap-2 px-5 py-2.5 rounded-[8px] text-[0.75rem] font-bold text-white/70 border border-white/10 hover:border-white/30 hover:text-white transition-all duration-200"
-          >
-            <Mail size={14} strokeWidth={2} />
-            Send Email
-          </a>
-        </div>
+        )}
       </div>
-    </section>
+    </div>
   );
 }

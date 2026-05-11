@@ -20,7 +20,7 @@ export default function SocialSidebar() {
 
   useEffect(() => {
     iconRefs.current.forEach((el) => {
-      gsap.set(el, { opacity: 0, y: 10, pointerEvents: "none", scale: 0.85 });
+      gsap.set(el, { opacity: 0, x: 10, pointerEvents: "none", scale: 0.85 });
     });
   }, []);
 
@@ -32,7 +32,7 @@ export default function SocialSidebar() {
     iconRefs.current.forEach((el, i) => {
       gsap.to(el, {
         opacity: 1,
-        y: 0,
+        x: 0,
         scale: 1,
         pointerEvents: "auto",
         duration: 0.35,
@@ -50,7 +50,6 @@ export default function SocialSidebar() {
   };
 
   const close = () => {
-    // Small delay so moving mouse to the icons doesn't flicker-close
     closeTimerRef.current = setTimeout(() => {
       setIsOpen(false);
 
@@ -60,7 +59,7 @@ export default function SocialSidebar() {
         .forEach((el, i) => {
           gsap.to(el, {
             opacity: 0,
-            y: 10,
+            x: 10,
             scale: 0.85,
             pointerEvents: "none",
             duration: 0.2,
@@ -85,12 +84,12 @@ export default function SocialSidebar() {
   return (
     <div
       ref={containerRef}
-      className="fixed right-5 top-1/2 -translate-y-1/2 z-50 hidden lg:flex flex-col items-center gap-2"
+      className="fixed right-5 top-1/2 -translate-y-1/2 z-50 hidden lg:flex items-center"
       onMouseEnter={() => { cancelClose(); open(); }}
       onMouseLeave={close}
     >
-      {/* Stacked social icons — appear above trigger on hover */}
-      <div className="flex flex-col items-center gap-[10px] mb-1">
+      {/* Horizontal social icons — appear to the left of trigger on hover */}
+      <div className="flex items-center gap-[10px] mr-2 order-1">
         {socialLinks.map((social, index) => (
           <Link
             key={social.name}
@@ -98,26 +97,32 @@ export default function SocialSidebar() {
             target="_blank"
             ref={(el) => { iconRefs.current[index] = el; }}
             title={social.name}
-            className="w-9 h-9 rounded-full flex items-center justify-center"
+            className="w-9 h-9 rounded-full flex items-center justify-center backdrop-blur-md"
             style={{
-              background: "#0a0a18",
-              border: "1px solid rgba(255,255,255,0.09)",
-              boxShadow: "0 2px 10px rgba(0,0,0,0.2)",
-              transition: "transform 0.15s ease",
+              background: "rgba(255,255,255,0.15)",
+              border: "1px solid rgba(255,255,255,0.2)",
+              boxShadow: "0 2px 12px rgba(0,0,0,0.15)",
+              transition: "transform 0.15s ease, background 0.15s ease",
             }}
-            onMouseEnter={(e) => { (e.currentTarget as HTMLElement).style.transform = "scale(1.15)"; }}
-            onMouseLeave={(e) => { (e.currentTarget as HTMLElement).style.transform = "scale(1)"; }}
+            onMouseEnter={(e) => { 
+              (e.currentTarget as HTMLElement).style.transform = "scale(1.15)"; 
+              (e.currentTarget as HTMLElement).style.background = "rgba(255,255,255,0.25)"; 
+            }}
+            onMouseLeave={(e) => { 
+              (e.currentTarget as HTMLElement).style.transform = "scale(1)"; 
+              (e.currentTarget as HTMLElement).style.background = "rgba(255,255,255,0.15)"; 
+            }}
           >
             <social.icon size={16} style={{ color: social.color }} />
           </Link>
         ))}
       </div>
 
-      {/* Trigger button — Users icon clearly hints "social/community" */}
+      {/* Trigger button */}
       <button
         ref={triggerRef}
         aria-label="Social links"
-        className="w-10 h-10 rounded-full flex items-center justify-center focus:outline-none"
+        className="w-10 h-10 rounded-full flex items-center justify-center focus:outline-none shrink-0 order-2"
         style={{
           background: "#1A56DB",
           boxShadow: "0 4px 18px rgba(26,86,219,0.38)",
