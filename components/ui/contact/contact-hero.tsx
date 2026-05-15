@@ -41,19 +41,19 @@ export default function ContactHero() {
   }, []);
 
   return (
-    <section ref={heroRef} className={`${serif.variable} ${sans.variable} relative bg-[#060616] overflow-hidden min-h-screen flex flex-col font-[family-name:var(--font-sans)]`}>
+    <section ref={heroRef} className={`${serif.variable} ${sans.variable} relative bg-[ #0b0b20] overflow-hidden min-h-screen flex flex-col font-[family-name:var(--font-sans)]`}>
       
       {/* Background */}
       <div className="absolute inset-0 pointer-events-none">
         <div className="absolute inset-0"
-          style={{ background: "radial-gradient(ellipse 120% 70% at 25% 0%, #0f0a3a 0%, #060616 55%)" }} />
+          style={{ background: "radial-gradient(ellipse 120% 70% at 25% 0%, #0f0a3a 0%,  #0b0b20 55%)" }} />
         
-        <div className="absolute w-[600px] h-[600px] rounded-full blur-[100px] opacity-[0.06]"
+        <div className="absolute w-[600px] h-[600px] rounded-full blur-[100px] opacity-[0.11]"
           style={{ top: "5%", right: "-8%", background: "#3B82F6" }} />
-        <div className="absolute w-[500px] h-[400px] rounded-full blur-[80px] opacity-[0.04]"
+        <div className="absolute w-[500px] h-[400px] rounded-full blur-[80px] opacity-[0.08]"
           style={{ bottom: "-5%", left: "15%", background: "#8B5CF6" }} />
         
-        <svg className="absolute inset-0 w-full h-full opacity-[0.035]" xmlns="http://www.w3.org/2000/svg">
+        <svg className="absolute inset-0 w-full h-full opacity-[0.065]" xmlns="http://www.w3.org/2000/svg">
           <defs>
             <pattern id="cg" x="0" y="0" width="48" height="48" patternUnits="userSpaceOnUse">
               <path d="M 48 0 L 0 0 0 48" fill="none" stroke="#6366f1" strokeWidth="0.35"/>
@@ -69,7 +69,7 @@ export default function ContactHero() {
         </svg>
         
         <div className="absolute inset-0"
-          style={{ background: "radial-gradient(ellipse 90% 90% at 50% 50%, transparent 15%, #060616ee 100%)" }} />
+          style={{ background: "radial-gradient(ellipse 90% 90% at 50% 50%, transparent 15%,  #0b0b20ee 100%)" }} />
       </div>
 
       <div className="relative z-10 flex-1 w-full max-w-[1320px] mx-auto px-5 sm:px-8 lg:px-12 pt-24 pb-16 flex flex-col">

@@ -1,14 +1,23 @@
 "use client";
-import { useEffect, useRef, useState, useCallback } from "react";
+import { useEffect, useRef } from "react";
 import { Instrument_Serif } from "next/font/google";
 import {
-  BookOpen, GraduationCap, FileText, Newspaper,
-  User, Briefcase, Search, BookMarked, Globe,
-  Check, ArrowRight, ChevronLeft, ChevronRight,
+  Check, ArrowRight, GraduationCap, BookOpen, FileText,
+  Newspaper, User, Briefcase, Search, BookMarked, Globe,
 } from "lucide-react";
 import gsap from "gsap";
+import {
+  ThesisAnimation,
+  DissertationAnimation,
+  ResearchAnimation,
+  ArticleAnimation,
+  BiographyAnimation,
+  BusinessAnimation,
+  CaseStudyAnimation,
+  BookAnimation,
+  JournalAnimation,
+} from "@/components/ui/animations/hero";
 
-// --- FONT SETUP ---
 const instrumentSerif = Instrument_Serif({
   weight: "400",
   style: ["normal", "italic"],
@@ -16,336 +25,398 @@ const instrumentSerif = Instrument_Serif({
   variable: "--font-serif",
 });
 
-// --- UTILS ---
-const dotPattern = (color: string) =>
-  `url("data:image/svg+xml,%3Csvg width='20' height='20' viewBox='0 0 20 20' xmlns='http://www.w3.org/2000/svg'%3E%3Ccircle cx='1' cy='1' r='1' fill='${encodeURIComponent(color)}'/%3E%3C/svg%3E")`;
-
-// --- DATA WITH IDS ---
 const services = [
   {
     id: "thesis-writing",
     num: "01",
     title: "Thesis Writing",
     icon: GraduationCap,
-    accent: "#1A56DB",
-    bg: "linear-gradient(135deg, #0a0f1e 0%, #0d1a3a 100%)",
-    mesh: "radial-gradient(ellipse 80% 60% at 70% 40%, #1A56DB18 0%, transparent 70%)",
+    Animation: ThesisAnimation,
+    accent: "#3B82F6",
+    accentLight: "#EFF6FF",
+    bgGradient: "linear-gradient(135deg, #FFFFFF 0%, #F0F5FF 100%)",
+    borderColor: "rgba(59,130,246,0.2)",
+    shadowColor: "rgba(59,130,246,0.1)",
     desc: "A thesis is the cornerstone of your academic career. Our expert writers craft compelling, well-structured theses that demonstrate your mastery of your field.",
-    points: ["Chapter-by-chapter structuring", "Literature review & methodology", "Data analysis & interpretation", "Formatting per university guidelines", "Plagiarism-free guarantee"],
+    points: [
+      "Chapter-by-chapter structuring",
+      "Literature review & methodology",
+      "Data analysis & interpretation",
+      "Formatting per university guidelines",
+      "Plagiarism-free guarantee",
+    ],
     tag: "Most Popular",
-    floatingIcons: [GraduationCap, FileText, BookOpen],
   },
   {
     id: "dissertation-writing",
     num: "02",
     title: "Dissertation Writing",
     icon: BookOpen,
-    accent: "#4ade80",
-    bg: "linear-gradient(135deg, #0d1f18 0%, #0d3b2e 100%)",
-    mesh: "radial-gradient(ellipse 80% 60% at 70% 40%, #4ade8018 0%, transparent 70%)",
+    Animation: DissertationAnimation,
+    accent: "#10B981",
+    accentLight: "#ECFDF5",
+    bgGradient: "linear-gradient(135deg, #FFFFFF 0%, #ECFDF5 100%)",
+    borderColor: "rgba(16,185,129,0.2)",
+    shadowColor: "rgba(16,185,129,0.1)",
     desc: "Whether it's a Master's or doctoral dissertation, we help you develop original research that makes a meaningful contribution to your field.",
-    points: ["Research design & methodology", "Primary & secondary research", "Critical analysis & synthesis", "Abstract & executive summary", "Viva preparation support"],
+    points: [
+      "Research design & methodology",
+      "Primary & secondary research",
+      "Critical analysis & synthesis",
+      "Abstract & executive summary",
+      "Viva preparation support",
+    ],
     tag: null,
-    floatingIcons: [BookOpen, Search, Globe],
   },
   {
     id: "research-paper-writing",
     num: "03",
     title: "Research Paper Writing",
     icon: FileText,
-    accent: "#a78bfa",
-    bg: "linear-gradient(135deg, #12102e 0%, #1e1b4b 100%)",
-    mesh: "radial-gradient(ellipse 80% 60% at 70% 40%, #a78bfa18 0%, transparent 70%)",
+    Animation: ResearchAnimation,
+    accent: "#8B5CF6",
+    accentLight: "#F5F3FF",
+    bgGradient: "linear-gradient(135deg, #FFFFFF 0%, #F5F3FF 100%)",
+    borderColor: "rgba(139,92,246,0.2)",
+    shadowColor: "rgba(139,92,246,0.1)",
     desc: "Publish research that gets noticed. Our team helps you articulate your findings clearly and meet the exacting standards of peer-reviewed journals worldwide.",
-    points: ["IMRaD structure adherence", "Citation & referencing (APA, MLA, Harvard)", "Abstract & keyword optimization", "Journal submission formatting", "Revision support included"],
+    points: [
+      "IMRaD structure adherence",
+      "Citation & referencing (APA, MLA, Harvard)",
+      "Abstract & keyword optimization",
+      "Journal submission formatting",
+      "Revision support included",
+    ],
     tag: null,
-    floatingIcons: [FileText, BookMarked, Globe],
   },
   {
     id: "article-writing",
     num: "04",
     title: "Article Writing",
     icon: Newspaper,
-    accent: "#fb7185",
-    bg: "linear-gradient(135deg, #250a13 0%, #3b0f1f 100%)",
-    mesh: "radial-gradient(ellipse 80% 60% at 70% 40%, #fb718518 0%, transparent 70%)",
+    Animation: ArticleAnimation,
+    accent: "#F43F5E",
+    accentLight: "#FFF1F2",
+    bgGradient: "linear-gradient(135deg, #FFFFFF 0%, #FFF1F2 100%)",
+    borderColor: "rgba(244,63,94,0.2)",
+    shadowColor: "rgba(244,63,94,0.1)",
     desc: "Academic articles require precision, authority, and clarity. We write review articles and opinion papers that position you as a thought leader in your discipline.",
-    points: ["Review & perspective articles", "Opinion & commentary pieces", "Technical & scientific articles", "SEO-optimized academic content", "Tailored to target publication"],
+    points: [
+      "Review & perspective articles",
+      "Opinion & commentary pieces",
+      "Technical & scientific articles",
+      "SEO-optimized academic content",
+      "Tailored to target publication",
+    ],
     tag: null,
-    floatingIcons: [Newspaper, FileText, Globe],
   },
   {
     id: "biography-writing",
     num: "05",
     title: "Biography Writing",
     icon: User,
-    accent: "#fb923c",
-    bg: "linear-gradient(135deg, #2a0e04 0%, #431407 100%)",
-    mesh: "radial-gradient(ellipse 80% 60% at 70% 40%, #fb923c18 0%, transparent 70%)",
+    Animation: BiographyAnimation,
+    accent: "#F59E0B",
+    accentLight: "#FFFBEB",
+    bgGradient: "linear-gradient(135deg, #FFFFFF 0%, #FFFBEB 100%)",
+    borderColor: "rgba(245,158,11,0.2)",
+    shadowColor: "rgba(245,158,11,0.1)",
     desc: "Your academic and professional story deserves to be told compellingly. We craft authoritative biographies for researchers, academics, and professionals.",
-    points: ["Academic & professional bios", "LinkedIn & institutional profiles", "Conference speaker bios", "Research portfolio narratives", "Tone-matched to your voice"],
+    points: [
+      "Academic & professional bios",
+      "LinkedIn & institutional profiles",
+      "Conference speaker bios",
+      "Research portfolio narratives",
+      "Tone-matched to your voice",
+    ],
     tag: null,
-    floatingIcons: [User, Briefcase, BookOpen],
   },
   {
     id: "business-proposal-writing",
     num: "06",
     title: "Business Proposal Writing",
     icon: Briefcase,
-    accent: "#22d3ee",
-    bg: "linear-gradient(135deg, #021c1c 0%, #042f2e 100%)",
-    mesh: "radial-gradient(ellipse 80% 60% at 70% 40%, #22d3ee18 0%, transparent 70%)",
+    Animation: BusinessAnimation,
+    accent: "#06B6D4",
+    accentLight: "#ECFEFF",
+    bgGradient: "linear-gradient(135deg, #FFFFFF 0%, #ECFEFF 100%)",
+    borderColor: "rgba(6,182,212,0.2)",
+    shadowColor: "rgba(6,182,212,0.1)",
     desc: "Bridge the gap between academia and industry with proposals that win funding, partnerships, and approvals.",
-    points: ["Executive summary crafting", "Market analysis & financials", "Research grant proposals", "Industry partnership proposals", "Government & NGO submissions"],
+    points: [
+      "Executive summary crafting",
+      "Market analysis & financials",
+      "Research grant proposals",
+      "Industry partnership proposals",
+      "Government & NGO submissions",
+    ],
     tag: null,
-    floatingIcons: [Briefcase, FileText, Search],
   },
   {
     id: "case-study-writing",
     num: "07",
     title: "Case Study Writing",
     icon: Search,
-    accent: "#a3e635",
-    bg: "linear-gradient(135deg, #0f0f10 0%, #18181b 100%)",
-    mesh: "radial-gradient(ellipse 80% 60% at 70% 40%, #a3e63518 0%, transparent 70%)",
+    Animation: CaseStudyAnimation,
+    accent: "#84CC16",
+    accentLight: "#F7FEE7",
+    bgGradient: "linear-gradient(135deg, #FFFFFF 0%, #F7FEE7 100%)",
+    borderColor: "rgba(132,204,22,0.2)",
+    shadowColor: "rgba(132,204,22,0.1)",
     desc: "Case studies are powerful tools for demonstrating real-world impact. We document your research outcomes in compelling narratives.",
-    points: ["Qualitative & quantitative cases", "Industry & academic case studies", "Problem-solution-result structure", "Interview & data integration", "Visual data presentation"],
+    points: [
+      "Qualitative & quantitative cases",
+      "Industry & academic case studies",
+      "Problem-solution-result structure",
+      "Interview & data integration",
+      "Visual data presentation",
+    ],
     tag: null,
-    floatingIcons: [Search, FileText, BookOpen],
   },
   {
     id: "book-publication",
     num: "08",
     title: "Book Publication",
     icon: BookMarked,
-    accent: "#f472b6",
-    bg: "linear-gradient(135deg, #1c1024 0%, #2d1b3d 100%)",
-    mesh: "radial-gradient(ellipse 80% 60% at 70% 40%, #f472b618 0%, transparent 70%)",
+    Animation: BookAnimation,
+    accent: "#EC4899",
+    accentLight: "#FDF2F8",
+    bgGradient: "linear-gradient(135deg, #FFFFFF 0%, #FDF2F8 100%)",
+    borderColor: "rgba(236,72,153,0.2)",
+    shadowColor: "rgba(236,72,153,0.1)",
     desc: "Turn your research into a published book. We guide you from manuscript preparation through finding the right publisher.",
-    points: ["Manuscript structuring & editing", "Publisher identification & outreach", "ISBN & copyright guidance", "Self-publishing support", "Print & digital formats"],
+    points: [
+      "Manuscript structuring & editing",
+      "Publisher identification & outreach",
+      "ISBN & copyright guidance",
+      "Self-publishing support",
+      "Print & digital formats",
+    ],
     tag: null,
-    floatingIcons: [BookMarked, Globe, GraduationCap],
   },
   {
     id: "journal-publication",
     num: "09",
     title: "Journal Publication",
     icon: Globe,
-    accent: "#34d399",
-    bg: "linear-gradient(135deg, #032b22 0%, #064e3b 100%)",
-    mesh: "radial-gradient(ellipse 80% 60% at 70% 40%, #34d39918 0%, transparent 70%)",
+    Animation: JournalAnimation,
+    accent: "#14B8A6",
+    accentLight: "#F0FDFA",
+    bgGradient: "linear-gradient(135deg, #FFFFFF 0%, #F0FDFA 100%)",
+    borderColor: "rgba(20,184,166,0.2)",
+    shadowColor: "rgba(20,184,166,0.1)",
     desc: "Getting published in a reputable journal is a major milestone. We navigate the complex submission process efficiently.",
-    points: ["Scopus & SCI journal targeting", "Cover letter & submission support", "Reviewer response drafting", "Impact factor analysis", "Post-acceptance formatting"],
+    points: [
+      "Scopus & SCI journal targeting",
+      "Cover letter & submission support",
+      "Reviewer response drafting",
+      "Impact factor analysis",
+      "Post-acceptance formatting",
+    ],
     tag: "Scopus Ready",
-    floatingIcons: [Globe, BookOpen, FileText],
   },
 ];
 
-// --- MAIN COMPONENT ---
 export default function PhdJourney() {
-  const [current, setCurrent] = useState(0);
-  const [contentKey, setContentKey] = useState(0);
-  const [direction, setDirection] = useState<"next" | "prev">("next");
-  const contentRef = useRef<HTMLDivElement>(null);
   const sectionRef = useRef<HTMLDivElement>(null);
-  const autoRef = useRef<NodeJS.Timeout | null>(null);
-  const INTERVAL = 5000;
+  const serviceRefs = useRef<(HTMLDivElement | null)[]>([]);
 
-  // Parse hash from URL and set initial slide
   useEffect(() => {
+    // Scroll to service if hash is present
     const hash = window.location.hash.replace("#", "");
-    if (hash) {
-      const index = services.findIndex((s) => s.id === hash);
-      if (index !== -1 && index !== current) {
-        setCurrent(index);
-        setContentKey((k) => k + 1);
-      }
-    }
-    
-    // Scroll to section if hash is present
     if (hash && sectionRef.current) {
-      setTimeout(() => {
-        sectionRef.current?.scrollIntoView({ behavior: "smooth", block: "center" });
-      }, 300);
-    }
-  }, []);
-
-  // Listen for hash changes
-  useEffect(() => {
-    const handleHashChange = () => {
-      const hash = window.location.hash.replace("#", "");
-      if (hash) {
-        const index = services.findIndex((s) => s.id === hash);
-        if (index !== -1 && index !== current) {
-          setDirection(index > current ? "next" : "prev");
-          setCurrent(index);
-          setContentKey((k) => k + 1);
-          
-          setTimeout(() => {
-            sectionRef.current?.scrollIntoView({ behavior: "smooth", block: "center" });
-          }, 200);
-        }
+      const index = services.findIndex((s) => s.id === hash);
+      if (index !== -1) {
+        setTimeout(() => {
+          serviceRefs.current[index]?.scrollIntoView({
+            behavior: "smooth",
+            block: "start",
+          });
+        }, 300);
       }
-    };
-
-    window.addEventListener("hashchange", handleHashChange);
-    return () => window.removeEventListener("hashchange", handleHashChange);
-  }, [current]);
-
-  // Manual & Auto Slide Logic
-  const go = useCallback((idx: number, dir: "next" | "prev") => {
-    setDirection(dir);
-    setCurrent(idx);
-    setContentKey((k) => k + 1);
-    
-    // Update URL hash without scrolling
-    const serviceId = services[idx].id;
-    window.history.replaceState(null, "", `#${serviceId}`);
-  }, []);
-
-  const next = useCallback(() => go((current + 1) % services.length, "next"), [current, go]);
-  const prev = useCallback(() => go((current - 1 + services.length) % services.length, "prev"), [current, go]);
-
-  const resetTimer = useCallback(() => {
-    if (autoRef.current) clearInterval(autoRef.current);
-    autoRef.current = setInterval(next, INTERVAL);
-  }, [next]);
-
-  useEffect(() => {
-    resetTimer();
-    return () => { if (autoRef.current) clearInterval(autoRef.current); };
-  }, [resetTimer]);
-
-  // GSAP Smooth Slide Animation
-  useEffect(() => {
-    if (contentRef.current) {
-      const xOffset = direction === "next" ? 60 : -60;
-      gsap.fromTo(contentRef.current, 
-        { x: xOffset, opacity: 0 },
-        { x: 0, opacity: 1, duration: 0.7, ease: "power3.out" }
-      );
     }
-  }, [contentKey, direction]);
 
-  const service = services[current];
-  const Icon = service.icon;
+    // Animate each service row on scroll
+    serviceRefs.current.forEach((ref, i) => {
+      if (ref) {
+        gsap.fromTo(
+          ref.querySelectorAll(".animate-on-scroll"),
+          { opacity: 0, y: 40 },
+          {
+            opacity: 1,
+            y: 0,
+            duration: 0.7,
+            stagger: 0.12,
+            scrollTrigger: {
+              trigger: ref,
+              start: "top 80%",
+              toggleActions: "play none none reverse",
+            },
+          }
+        );
+      }
+    });
+
+    return () => {
+      gsap.killTweensOf(".animate-on-scroll");
+    };
+  }, []);
 
   return (
-    <div ref={sectionRef} className={`${instrumentSerif.variable} w-full px-4 sm:px-8 lg:px-14 py-16 font-sans`} id="phd-journey">
-      <style>{`
-        @keyframes floatIcon {
-          0%, 100% { transform: translateY(0px) rotate(0deg); }
-          50% { transform: translateY(-12px) rotate(4deg); }
-        }
-        @keyframes progressBar {
-          from { width: 0%; }
-          to   { width: 100%; }
-        }
-      `}</style>
-
-      {/* Header section */}
-      <div className="flex items-end justify-between mb-10">
-        <div>
-          <p className="text-[0.6rem] font-bold tracking-[0.25em] uppercase text-blue-600 mb-3">Our Services</p>
-          <h2 className="font-[family-name:var(--font-serif)] italic text-[clamp(2rem,4vw,3.2rem)] text-black leading-none tracking-tight">
-            PhD Journey Support
-          </h2>
-        </div>
-        <div className="flex items-center gap-3">
-          <button onClick={() => { prev(); resetTimer(); }} className="w-10 h-10 rounded-full border border-black/10 flex items-center justify-center text-black/40 hover:text-black hover:border-black/30 transition-all duration-200">
-            <ChevronLeft size={16} strokeWidth={2} />
-          </button>
-          <span className="text-[0.65rem] font-bold tracking-widest text-black/25 tabular-nums w-12 text-center">
-            {String(current + 1).padStart(2, "0")} / 09
-          </span>
-          <button onClick={() => { next(); resetTimer(); }} className="w-10 h-10 rounded-full border border-black/10 flex items-center justify-center text-black/40 hover:text-black hover:border-black/30 transition-all duration-200">
-            <ChevronRight size={16} strokeWidth={2} />
-          </button>
-        </div>
+    <div
+      ref={sectionRef}
+      className={`${instrumentSerif.variable} w-full px-4 sm:px-8 lg:px-14 py-16 font-sans bg-gradient-to-b from-slate-50 via-white to-slate-50`}
+      id="phd-journey"
+    >
+      {/* Header */}
+      <div className="text-center mb-16">
+        <p className="text-[0.6rem] font-bold tracking-[0.25em] uppercase text-blue-600 mb-3">
+          Our Services
+        </p>
+        <h2 className="font-[family-name:var(--font-serif)] italic text-[clamp(2rem,5vw,3.5rem)] text-gray-900 leading-none tracking-tight">
+          PhD Journey Support
+        </h2>
+        <p className="text-gray-500 text-sm mt-3 max-w-xl mx-auto">
+          Comprehensive academic support at every stage of your doctoral journey
+        </p>
       </div>
 
-      {/* Main Shell */}
-      <div
-        className="relative w-full min-h-[70vh] rounded-[28px] overflow-hidden"
-        style={{
-          background: service.bg,
-          boxShadow: "0 40px 100px rgba(0,0,0,0.1), inset 0 1px 0 rgba(255,255,255,0.06)",
-          border: "1px solid rgba(0,0,0,0.05)",
-          transition: "background 0.8s ease",
-        }}
-      >
-        {/* Layered Textures */}
-        <div className="absolute inset-0 opacity-[0.12]" style={{ backgroundImage: dotPattern(service.accent), backgroundSize: "20px 20px" }} />
-        <div className="absolute inset-0" style={{ background: service.mesh, transition: "background 0.6s ease" }} />
-        <div className="absolute inset-0 opacity-[0.08] mix-blend-overlay pointer-events-none" style={{ backgroundImage: `url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E")`, backgroundSize: "128px 128px" }} />
-        <div className="absolute top-0 left-0 right-0 h-[1px]" style={{ background: `linear-gradient(90deg, transparent, ${service.accent}50, transparent)` }} />
-        
-        {/* BG Number */}
-        <div className="absolute right-0 bottom-0 text-[clamp(8rem,20vw,18rem)] font-black leading-none select-none pointer-events-none opacity-[0.04]" style={{ color: service.accent, lineHeight: 0.8 }}>
-          {service.num}
-        </div>
+      {/* Services List - Alternating Layout with Cards */}
+      <div className="max-w-6xl mx-auto">
+        {services.map((service, idx) => {
+          const isEven = idx % 2 === 0;
+          const AnimationComponent = service.Animation;
 
-        {/* Floating Icons */}
-        {service.floatingIcons.map((FIcon, i) => (
-          <div key={`${contentKey}-${i}`} className="absolute hidden lg:block" style={{ top: `${12 + i * 26}%`, right: `${6 + (i % 2) * 4}%`, animation: `floatIcon ${6 + i}s ease-in-out infinite`, animationDelay: `${i * 0.5}s` }}>
-            <div className="rounded-[10px] p-2 flex items-center justify-center" style={{ background: `${service.accent}14`, border: `1px solid ${service.accent}25`, backdropFilter: "blur(4px)" }}>
-              <FIcon size={22} style={{ color: service.accent, opacity: 0.5 }} strokeWidth={1.2} />
-            </div>
-          </div>
-        ))}
+          return (
+            <div
+              key={service.id}
+              id={service.id}
+              ref={(el) => {
+                serviceRefs.current[idx] = el;
+              }}
+              className={`relative flex flex-col ${
+                isEven ? "lg:flex-row" : "lg:flex-row-reverse"
+              } gap-10 items-center py-10 mb-8 rounded-3xl transition-all duration-500 hover:-translate-y-1 group`}
+              style={{
+                background: service.bgGradient,
+                border: `1px solid ${service.borderColor}`,
+                boxShadow: `0 20px 40px -12px ${service.shadowColor}, 0 4px 12px rgba(0,0,0,0.02)`,
+              }}
+            >
+              {/* Decorative corner accent */}
+              <div
+                className="absolute top-0 right-0 w-32 h-32 rounded-tr-3xl opacity-10 pointer-events-none"
+                style={{
+                  background: `radial-gradient(circle at top right, ${service.accent}, transparent)`,
+                }}
+              />
+              <div
+                className="absolute bottom-0 left-0 w-32 h-32 rounded-bl-3xl opacity-10 pointer-events-none"
+                style={{
+                  background: `radial-gradient(circle at bottom left, ${service.accent}, transparent)`,
+                }}
+              />
 
-        {/* Inner Content with GSAP Ref */}
-        <div ref={contentRef} className="relative z-10 grid grid-cols-1 lg:grid-cols-2 gap-12 items-center p-10 sm:p-14 min-h-[70vh]">
-          <div className="flex flex-col gap-6">
-            <div className="flex items-center gap-4">
-              <span className="text-[0.6rem] font-bold tracking-[0.22em] uppercase" style={{ color: `${service.accent}90` }}>{service.num} / 09</span>
-              {service.tag && <span className="text-[0.55rem] font-bold tracking-[0.14em] uppercase px-3 py-1 rounded-full" style={{ background: `${service.accent}18`, border: `1px solid ${service.accent}30`, color: service.accent }}>{service.tag}</span>}
-            </div>
-            <div className="w-10 h-[2px] rounded-full" style={{ background: service.accent }} />
-            <h3 className="font-[family-name:var(--font-serif)] italic text-[clamp(2.6rem,5vw,4.8rem)] font-black leading-[0.95] tracking-tighter text-white">
-              {service.title}
-            </h3>
-            <p className="text-[0.87rem] leading-[1.85] text-white/60 max-w-[460px]">{service.desc}</p>
-            <ul className="flex flex-col gap-2.5">
-              {service.points.map((p) => (
-                <li key={p} className="flex items-center gap-3">
-                  <div className="w-5 h-5 rounded-full flex items-center justify-center shrink-0" style={{ background: `${service.accent}25`, border: `1px solid ${service.accent}40` }}>
-                    <Check size={11} style={{ color: service.accent }} strokeWidth={3} />
-                  </div>
-                  <span className="text-[0.82rem] text-white/70">{p}</span>
-                </li>
-              ))}
-            </ul>
-            <div className="pt-2">
-               <button className="flex items-center gap-3 px-6 py-3.5 rounded-full text-[0.72rem] font-bold uppercase tracking-widest text-white transition-all group" style={{ background: service.accent }}>
-                  Get Started <ArrowRight size={14} className="group-hover:translate-x-1 transition-transform" />
-               </button>
-            </div>
-          </div>
-
-          <div className="hidden lg:flex items-center justify-center">
-            <div className="relative w-[320px] h-[360px] rounded-[32px] flex flex-col items-center justify-center gap-6 overflow-hidden" style={{ background: `linear-gradient(145deg, ${service.accent}15, ${service.accent}05)`, border: `1px solid ${service.accent}20`, boxShadow: `0 24px 80px ${service.accent}15` }}>
-              <div className="absolute top-0 left-0 right-0 h-[1px]" style={{ background: `linear-gradient(90deg, transparent, ${service.accent}50, transparent)` }} />
-              <div className="w-24 h-24 rounded-[28px] flex items-center justify-center" style={{ background: `${service.accent}20`, border: `1px solid ${service.accent}30` }}>
-                <Icon size={48} strokeWidth={1} style={{ color: service.accent }} />
+              {/* Left Side - Animation / Visual */}
+              <div className="flex-1 flex justify-center p-6">
+                <div className="animate-on-scroll relative w-[280px] h-[280px] lg:w-[320px] lg:h-[320px]">
+                  {/* Glow behind animation */}
+                  <div
+                    className="absolute inset-0 rounded-full blur-3xl transition-all duration-500 group-hover:opacity-50"
+                    style={{ background: service.accent, opacity: 0.2 }}
+                  />
+                  {/* Pulse ring on hover */}
+                  <div
+                    className="absolute inset-0 rounded-full border-2 transition-all duration-500 group-hover:scale-110 group-hover:opacity-100 opacity-0"
+                    style={{ borderColor: `${service.accent}40` }}
+                  />
+                  <AnimationComponent />
+                </div>
               </div>
-              <div className="text-center px-6">
-                <div className="text-[0.58rem] font-bold tracking-[0.2em] uppercase mb-2" style={{ color: `${service.accent}` }}>AIS Solutions</div>
-                <div className="text-white font-bold text-[1.1rem] leading-[1.3] font-[family-name:var(--font-serif)] italic">{service.title}</div>
+
+              {/* Right Side - Content */}
+              <div className="flex-1 p-6 lg:p-8 space-y-5">
+                {/* Number & Tag */}
+                <div className="flex items-center gap-3 flex-wrap animate-on-scroll">
+                  <span
+                    className="text-[0.65rem] font-bold tracking-[0.22em] uppercase px-3 py-1 rounded-full bg-white shadow-sm"
+                    style={{ color: service.accent }}
+                  >
+                    {service.num}
+                  </span>
+                  {service.tag && (
+                    <span
+                      className="text-[0.6rem] font-bold tracking-[0.14em] uppercase px-3 py-1 rounded-full"
+                      style={{
+                        background: `${service.accentLight}`,
+                        color: service.accent,
+                        border: `1px solid ${service.accent}30`,
+                      }}
+                    >
+                      {service.tag}
+                    </span>
+                  )}
+                </div>
+
+                {/* Title */}
+                <h3 className="animate-on-scroll font-[family-name:var(--font-serif)] text-[clamp(1.8rem,3.5vw,2.5rem)] font-bold leading-[1.2] tracking-tight text-gray-900">
+                  {service.title}
+                </h3>
+
+                {/* Accent Line with animation */}
+                <div
+                  className="animate-on-scroll w-12 h-[3px] rounded-full transition-all duration-500 group-hover:w-20"
+                  style={{ background: service.accent }}
+                />
+
+                {/* Description */}
+                <p className="animate-on-scroll text-[0.85rem] leading-[1.7] text-gray-600">
+                  {service.desc}
+                </p>
+
+                {/* Features List - Grid layout */}
+                <ul className="animate-on-scroll grid grid-cols-1 sm:grid-cols-2 gap-2.5 pt-2">
+                  {service.points.map((point) => (
+                    <li
+                      key={point}
+                      className="flex items-center gap-2.5 text-[0.78rem] text-gray-600"
+                    >
+                      <div
+                        className="w-5 h-5 rounded-full flex items-center justify-center shrink-0 transition-transform duration-200 group-hover:scale-110"
+                        style={{ background: `${service.accent}15` }}
+                      >
+                        <Check size={11} style={{ color: service.accent }} strokeWidth={3} />
+                      </div>
+                      <span>{point}</span>
+                    </li>
+                  ))}
+                </ul>
+
+                {/* CTA Button */}
+                <div className="animate-on-scroll pt-4">
+                  <button
+                    className="group/btn flex items-center gap-2.5 px-6 py-3 rounded-full text-[0.7rem] font-bold uppercase tracking-wider text-white transition-all duration-300 hover:gap-4 hover:shadow-lg"
+                    style={{ background: service.accent }}
+                  >
+                    Get Started
+                    <ArrowRight
+                      size={13}
+                      className="transition-all duration-300 group-hover/btn:translate-x-1"
+                    />
+                  </button>
+                </div>
               </div>
             </div>
-          </div>
-        </div>
+          );
+        })}
       </div>
 
-      {/* Nav Dots & Progress */}
-      <div className="flex items-center justify-center gap-2 mt-8">
-        {services.map((s, i) => (
-          <button key={i} onClick={() => { go(i, i > current ? "next" : "prev"); resetTimer(); }} className="transition-all duration-500 rounded-full" style={{ width: i === current ? "32px" : "6px", height: "6px", background: i === current ? s.accent : "rgba(0,0,0,0.1)" }} />
-        ))}
-      </div>
-      <div className="relative mt-4 h-[2px] w-full max-w-[200px] mx-auto rounded-full overflow-hidden bg-black/5">
-        <div key={`bar-${contentKey}`} className="absolute left-0 top-0 h-full rounded-full" style={{ background: service.accent, animation: `progressBar ${INTERVAL}ms linear forwards` }} />
+      {/* Bottom CTA */}
+      <div className="text-center mt-12 pt-10">
+        <p className="text-gray-500 text-sm mb-4">Not sure which service you need?</p>
+        <button className="px-8 py-3.5 rounded-full bg-gray-900 text-white text-[0.75rem] font-bold uppercase tracking-wider hover:bg-blue-600 transition-all duration-300 shadow-lg hover:shadow-xl">
+          Talk to Our Expert
+        </button>
       </div>
     </div>
   );

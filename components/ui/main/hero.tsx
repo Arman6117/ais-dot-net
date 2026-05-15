@@ -108,7 +108,7 @@ export default function Hero() {
       className={`
         ${instrumentSerif.variable} ${inter.variable}
         relative min-h-screen flex items-center
-        bg-[#03020f] font-sans overflow-hidden
+        bg-[#0c0a1e] font-sans overflow-hidden
       `}
     >
 
@@ -117,9 +117,9 @@ export default function Hero() {
 
         {/* 1. Deep aurora base — two competing gradients */}
         <div className="absolute inset-0"
-          style={{ background:"radial-gradient(ellipse 140% 80% at 50% -10%, #130a4a 0%, #03020f 55%)" }}/>
+          style={{ background:"radial-gradient(ellipse 140% 80% at 50% -10%, #1a1060 0%, #0c0a1e 55%)" }}/>
         <div className="absolute inset-0"
-          style={{ background:"radial-gradient(ellipse 80% 60% at 100% 100%, #0c1a3a 0%, transparent 60%)" }}/>
+          style={{  background:"radial-gradient(ellipse 80% 60% at 100% 100%, #102040 0%, transparent 60%)" }}/>
 
         {/* 2. Service-color megaglow — transitions with active service */}
         <div
@@ -128,7 +128,7 @@ export default function Hero() {
             width:1100, height:1100,
             top:"50%", left:"60%",
             transform:"translate(-50%,-50%)",
-            background:`radial-gradient(circle, ${cur.glow}1a 0%, transparent 55%)`,
+            background:`radial-gradient(circle, ${cur.glow}2e 0%, transparent 55%)`,
             filter:"blur(40px)",
           }}
         />
@@ -136,12 +136,12 @@ export default function Hero() {
         {/* 3. Left-side static indigo glow */}
         <div className="absolute rounded-full"
           style={{ width:700, height:600, top:"-10%", left:"-15%",
-            background:"radial-gradient(circle, #4f46e515 0%, transparent 60%)", filter:"blur(60px)" }}/>
+            background:"radial-gradient(circle, #4f46e528 0%, transparent 60%)", filter:"blur(60px)" }}/>
 
         {/* 4. Bottom-right warm accent */}
         <div className="absolute rounded-full transition-all duration-1000"
           style={{ width:500, height:400, bottom:"-5%", right:"-5%",
-            background:`radial-gradient(circle, ${cur.glow}0f 0%, transparent 60%)`, filter:"blur(50px)" }}/>
+            background:`radial-gradient(circle, ${cur.glow}20 0%, transparent 60%)`, filter:"blur(50px)" }}/>
 
         {/* 5. Aurora horizontal bands */}
         <div className="absolute inset-x-0"
@@ -156,7 +156,7 @@ export default function Hero() {
           }}/>
 
         {/* 6. Fine grid */}
-        <svg className="absolute inset-0 w-full h-full opacity-[0.055]" xmlns="http://www.w3.org/2000/svg">
+        <svg className="absolute inset-0 w-full h-full opacity-[0.09]" xmlns="http://www.w3.org/2000/svg">
           <defs>
             <pattern id="grid" x="0" y="0" width="56" height="56" patternUnits="userSpaceOnUse">
               <path d="M 56 0 L 0 0 0 56" fill="none" stroke="#5b6fbe" strokeWidth="0.4"/>
@@ -191,11 +191,11 @@ export default function Hero() {
 
         {/* 10. Radial vignette */}
         <div className="absolute inset-0"
-          style={{ background:"radial-gradient(ellipse 100% 100% at 50% 50%, transparent 20%, #03020fee 100%)" }}/>
+          style={{background:"radial-gradient(ellipse 100% 100% at 50% 50%, transparent 20%, #0c0a1eee 100%)" }}/>
 
         {/* 11. Top edge darkener (below navbar) */}
         <div className="absolute top-0 left-0 right-0 h-24"
-          style={{ background:"linear-gradient(to bottom, #03020f 0%, transparent 100%)" }}/>
+          style={{ background:"linear-gradient(to bottom, #0c0a1e 0%, transparent 100%)" }}/>
       </div>
       {/* ══ END BACKGROUND ══════════════════════════════════════ */}
 

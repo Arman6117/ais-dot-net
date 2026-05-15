@@ -120,15 +120,15 @@ export default function ServicesHero() {
   return (
     <section 
       ref={containerRef} 
-      className={`${instrumentSerif.variable} ${mono.variable} relative min-h-screen bg-[#020204] text-white flex items-center overflow-hidden font-sans`}
+      className={`${instrumentSerif.variable} ${mono.variable} relative min-h-screen bg-[#090912] text-white flex items-center overflow-hidden font-sans`}
     >
       {/* Background Pattern */}
-      <div className="absolute inset-0 opacity-[0.06] pointer-events-none" 
+      <div className="absolute inset-0 opacity-[0.10] pointer-events-none" 
         style={{ backgroundImage: `radial-gradient(circle at 1px 1px, #3b82f6 1px, transparent 0)`, backgroundSize: '40px 40px' }} 
       />
       
       {/* Subtle grid lines */}
-      <div className="absolute inset-0 opacity-[0.02] pointer-events-none"
+      <div className="absolute inset-0 opacity-[0.04] pointer-events-none"
         style={{
           backgroundImage: `linear-gradient(#3b82f6 1px, transparent 1px), linear-gradient(90deg, #3b82f6 1px, transparent 1px)`,
           backgroundSize: '80px 80px',

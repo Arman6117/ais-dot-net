@@ -108,12 +108,7 @@ const TheCard = () => {
         style={{ transformStyle: "preserve-3d" }}
       >
         {/* Dynamic glow overlay */}
-        <div 
-          ref={glowRef}
-          className="absolute inset-0 opacity-0 transition-opacity duration-300 pointer-events-none z-10"
-          style={{ background: "radial-gradient(circle at 50% 50%, rgba(255,255,255,0.15), rgba(255,255,255,0.05))" }}
-        />
-
+      
         {/* Image with subtle overlay */}
         <div className="relative w-full h-full">
           <Image
@@ -124,11 +119,10 @@ const TheCard = () => {
             priority
           />
           {/* Color overlay to match theme */}
-          <div className="absolute inset-0 bg-gradient-to-t from-[#0A0F2A]/90 via-[#111B3D]/30 to-[#0A0F2A]/10 mix-blend-multiply" />
         </div>
 
         {/* Gradient overlay for text readability */}
-        <div className="absolute inset-0 bg-gradient-to-t from-[#0A0F2A]/95 via-[#0A0F2A]/40 to-transparent" />
+        <div className="absolute inset-0 bg-gradient-to-t from-[#0A0F2A]/55 via-[#0A0F2A]/40 to-transparent" />
 
         {/* Content overlay */}
         <div className="absolute bottom-0 left-0 right-0 p-6 z-20">
@@ -146,7 +140,6 @@ const TheCard = () => {
               </span>
             </div>
 
-            {/* LinkedIn Button */}
             <div 
               className="relative size-7 rounded-full bg-white/10 hover:bg-white/20 transition-all duration-300 flex items-center justify-center cursor-pointer"
               onMouseEnter={() => setHovered(true)}
